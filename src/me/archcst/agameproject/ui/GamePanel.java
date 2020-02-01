@@ -6,8 +6,10 @@
 
 package me.archcst.agameproject.ui;
 
-import me.archcst.agameproject.avatar.ASCIIPlayer;
+import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.Framer;
+import me.archcst.agameproject.datacenter.PlayerController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,10 +25,13 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     private GamePanel() {
-        this.setSize(600, 800);
+        this.setSize(800, 600);
         this.setLocation(0,0);
         this.setVisible(true);
         this.setBackground(Color.BLACK);
+
+        this.setFocusable(true);
+        this.addKeyListener(new GameKeyListener());
 
         Thread thread = new Thread(this);
         thread.start();
@@ -35,13 +40,15 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
         Framer framer = Framer.getInstance();
+        DataCenter dataCenter = DataCenter.getInstance();
         while (true) {
             try {
-                Thread.sleep(40);
+                Thread.sleep(8);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             framer.nextFrame();
+            dataCenter.gameProcess();
             this.repaint();
         }
     }
@@ -49,8 +56,6 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        ASCIIPlayer player = ASCIIPlayer.getInstance();
-        player.moves.get("walk").draw(g);
+        DataCenter.getInstance().drawFrame(g);
     }
 }

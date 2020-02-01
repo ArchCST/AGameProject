@@ -40,6 +40,10 @@ public class Framer {
      * @return
      */
     public int getFrame(int speed) {
-        return frame / speed;
+        if (speed != 0) {
+            return frame / speed;
+        } else {
+            return 1;
+        }
     }
 }

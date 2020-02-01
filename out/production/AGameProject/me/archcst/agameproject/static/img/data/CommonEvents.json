@@ -1,0 +1,6 @@
+[
+null,
+{"id":1,"list":[{"code":0,"indent":0,"parameters":[]}],"name":"Book","switchId":20,"trigger":0},
+{"id":2,"list":[{"code":236,"indent":0,"parameters":["snow",5,60,false]},{"code":0,"indent":0,"parameters":[]}],"name":"Rain","switchId":1,"trigger":0},
+{"id":3,"list":[{"code":236,"indent":0,"parameters":["none",5,60,true]},{"code":0,"indent":0,"parameters":[]}],"name":"STOP","switchId":1,"trigger":0}
+]

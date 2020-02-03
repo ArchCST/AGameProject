@@ -7,14 +7,16 @@
 package me.archcst.agameproject.datacenter;
 
 import me.archcst.agameproject.avatar.Player;
-import me.archcst.agameproject.ui.GameFrame;
-import me.archcst.agameproject.util.GameLoader;
+import me.archcst.agameproject.map.GameMap;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class DataCenter {
     private static DataCenter dataCenter = null;
+    private PlayerController playerController = PlayerController.getInstance();
+    private GameMap gameMap = GameMap.getInstance();
+    private Player player = Player.getInstance();
+    private Framer framer = Framer.getInstance();
 
     public static DataCenter getInstance() {
         if (dataCenter == null) {
@@ -26,14 +28,13 @@ public class DataCenter {
     private DataCenter() {}
 
     public void drawFrame(Graphics g) {
-        Player player = Player.getInstance();
-        Framer framer = Framer.getInstance();
+
+        gameMap.draw(g);
         player.act(g, player.getActionString(), framer.getFrame(player.getRefreshRate()));
     }
 
-    public void gameProcess() {
-        PlayerController playerController = PlayerController.getInstance();
-        playerController.changePlayerLocation();
+    public void gameProcess(Graphics g) {
+        playerController.playerMoving(g);
     }
 
 

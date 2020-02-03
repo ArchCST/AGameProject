@@ -6,15 +6,13 @@
 
 package me.archcst.agameproject.ui;
 
-import me.archcst.agameproject.avatar.Player;
-import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.PlayerController;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameKeyListener implements KeyListener {
-    PlayerController playerController = PlayerController.getInstance();
+    // Q: private PlayerController playerController = PlayerController.getInstance();
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -22,6 +20,8 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        PlayerController playerController = PlayerController.getInstance();
+        System.out.println("KeyPressed");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 playerController.setDirections("up", true);
@@ -35,11 +35,16 @@ public class GameKeyListener implements KeyListener {
             case KeyEvent.VK_S:
                 playerController.setDirections("down", true);
                 break;
+                // todo 死亡
+            case KeyEvent.VK_X:
+                playerController.die();
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        PlayerController playerController = PlayerController.getInstance();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 playerController.setDirections("up", false);

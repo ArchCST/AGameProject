@@ -6,13 +6,17 @@
 
 package me.archcst.agameproject;
 
+import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GameFrame;
-import me.archcst.agameproject.util.GameLoader;
 
 public class Demo {
     public static void main(String[] args) {
-        GameLoader gameLoader = new GameLoader();
-        gameLoader.initGame();
+//        GameMap gameMap = GameMap.getInstance();
+//        Player player = Player.getInstance();
+
+//        player.loadPlayer();
+//        gameMap.newMap();
 
         GameFrame gameFrame = new GameFrame();
         gameFrame.mainFrame();

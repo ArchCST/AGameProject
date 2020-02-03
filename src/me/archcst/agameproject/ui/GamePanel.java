@@ -6,16 +6,18 @@
 
 package me.archcst.agameproject.ui;
 
-import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.Framer;
-import me.archcst.agameproject.datacenter.PlayerController;
+import me.archcst.agameproject.util.GameSettings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements Runnable{
     private static GamePanel gamePanel;
+    private static Framer framer = Framer.getInstance();
 
     public static GamePanel getInstance(){
         if (gamePanel == null) {
@@ -25,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     private GamePanel() {
-        this.setSize(800, 600);
+        this.setSize(GameSettings.GAME_WIDTH, GameSettings.GAME_HEIGHT);
         this.setLocation(0,0);
         this.setVisible(true);
         this.setBackground(Color.BLACK);
@@ -39,8 +41,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        Framer framer = Framer.getInstance();
-        DataCenter dataCenter = DataCenter.getInstance();
         while (true) {
             try {
                 Thread.sleep(8);
@@ -48,7 +48,6 @@ public class GamePanel extends JPanel implements Runnable{
                 e.printStackTrace();
             }
             framer.nextFrame();
-            dataCenter.gameProcess();
             this.repaint();
         }
     }
@@ -56,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        DataCenter.getInstance().drawFrame(g);
+        DataCenter dataCenter = DataCenter.getInstance();
+        dataCenter.gameProcess(g);
+        dataCenter.drawFrame(g);
     }
 }

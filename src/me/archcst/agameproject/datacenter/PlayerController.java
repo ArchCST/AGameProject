@@ -7,39 +7,51 @@
 package me.archcst.agameproject.datacenter;
 
 import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.map.GameMap;
 
 import java.awt.*;
 
 public class PlayerController {
-    Player player = Player.getInstance();
-
+    private Player player = Player.getInstance();
+    private Dimension tempMapOffset = GameMap.getInstance().getOffset();
     private Boolean up = false, right = false, down = false, left = false;
 
-    public void changePlayerLocation() {
-        Point playerLocation = player.getPoint();
-
+    public void playerMoving(Graphics g) {
+        GameMap gameMap = GameMap.getInstance();
+        // 角色不动时不刷新动画
         if (!up && !down && !left && !right) {
             player.setRefreshRate(0);
         } else {
-            player.setRefreshRate(16);
+            player.setRefreshRate(12);
         }
 
         if (up) {
-            playerLocation.y -= player.getWalkSpeed();
+            tempMapOffset.height = gameMap.getOffset().height + player.getWalkSpeed();
+            if (gameMap.playerCollision(g, tempMapOffset)) {
+                tempMapOffset.height = gameMap.getOffset().height - player.getWalkSpeed();
+            }
         }
         if (down) {
-            playerLocation.y += player.getWalkSpeed();
+            tempMapOffset.height = gameMap.getOffset().height - player.getWalkSpeed();
+            if (gameMap.playerCollision(g, tempMapOffset)) {
+                tempMapOffset.height = gameMap.getOffset().height + player.getWalkSpeed();
+            }
         }
         if (left) {
-            playerLocation.x -= player.getWalkSpeed();
+            tempMapOffset.width = gameMap.getOffset().width + player.getWalkSpeed();
+            if (gameMap.playerCollision(g, tempMapOffset)) {
+                tempMapOffset.width = gameMap.getOffset().width - player.getWalkSpeed();
+            }
         }
         if (right) {
-            playerLocation.x += player.getWalkSpeed();
+            tempMapOffset.width = gameMap.getOffset().width - player.getWalkSpeed();
+            if (gameMap.playerCollision(g, tempMapOffset)) {
+                tempMapOffset.width = gameMap.getOffset().width + player.getWalkSpeed();
+            }
         }
 
-        player.setPoint(playerLocation);
+        gameMap.setOffset(tempMapOffset);
     }
-
 
     /**
      * 根据按键设置人物方向
@@ -91,20 +103,16 @@ public class PlayerController {
                     break;
             }
 
-            if (up) {
-                player.setActionString("walk_up");
-            }
-            if (down) {
-                player.setActionString("walk_down");
-            }
-            if (left) {
-                player.setActionString("walk_left");
-            }
-            if (right) {
-                player.setActionString("walk_right");
-            }
+            if (up) player.setActionString("walk_up");
+            if (down) player.setActionString("walk_down");
+            if (left) player.setActionString("walk_left");
+            if (right) player.setActionString("walk_right");
         }
+    }
 
+    public void die() {
+        player.setActionString("die");
+        player.setAlive(false);
     }
 
     /*

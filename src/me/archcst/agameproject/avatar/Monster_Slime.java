@@ -6,6 +6,33 @@
 
 package me.archcst.agameproject.avatar;
 
-public class Monster_Slime extends Avatar {
+import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.util.CollisionBox;
 
+import java.awt.*;
+import java.io.File;
+
+public class Monster_Slime extends Avatar {
+    public Monster_Slime(Point location) {
+        moveCtrl = new MonsterMoveCtrl(this, 500, 1000);
+        Point mapOffset = GameMap.getInstance().getOffset();
+        this.location = location;
+
+        zoom = 1;
+        dimension = new Dimension(48, 48);
+        currentAction = "walk_down";
+        walkSpeed = 1;
+        refreshRate = 16;
+        alive = true;
+
+        // 碰撞箱
+        collisionBox = new CollisionBox(location.x + 13 + mapOffset.x, location.y + 30 + mapOffset.y,
+                location.x + dimension.width - 14 + mapOffset.x, location.y + dimension.height + mapOffset.y);
+
+        loadAvatarMovements(new Point(144, 0),
+                new File("src/me/archcst/agameproject/static/img/characters/Monster.png"));
+
+        loadAvatarDie(new Point(144, 48),
+                new File("src/me/archcst/agameproject/static/img/characters/Damage3.png"));
+    }
 }

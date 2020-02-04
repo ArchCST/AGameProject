@@ -6,6 +6,7 @@
 
 package me.archcst.agameproject.map;
 
+import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -14,41 +15,60 @@ import java.awt.*;
 
 public class GameMap {
     public static final int BLOCK_SIZE = 48; // 地图块大小（px）
-    private static Dimension offset = new Dimension(); // player 移动时地图的偏移量
+    private Point offset = new Point(); // player 移动时地图的偏移量
     private static MapBlock[][] mapBlocks; // 地图数组
 
     public void newMap() {
         mapBlocks = new MapGenerator().generateMap();
-        offset.width = Player.getInstance().getpPoint().x+24-mapBlocks[0].length * BLOCK_SIZE / 2;
-        offset.height = Player.getInstance().getpPoint().y+24-mapBlocks.length * BLOCK_SIZE / 2;
+        offset = new Point(Player.getInstance().getLocation().x + 24 - mapBlocks[0].length * BLOCK_SIZE / 2,
+                Player.getInstance().getLocation().y + 24 - mapBlocks.length * BLOCK_SIZE / 2);
+        mapMove(offset);
     }
 
     public void draw(Graphics g) {
-        for (int line = 0; line < mapBlocks.length; line++) {
-            for (int column = 0; column < mapBlocks[0].length; column++) {
-                mapBlocks[line][column].draw(g, offset);
+        for (MapBlock[] mbs : mapBlocks) {
+            for (MapBlock mb : mbs) {
+                mb.draw(g);
             }
         }
     }
 
-    public Boolean playerCollision(Graphics g, Dimension tempOffset) {
+    public void mapMove(Point offset) {
+        for (MapBlock[] mbs : mapBlocks) {
+            for (MapBlock mb : mbs) {
+                mb.blockMove(offset);
+            }
+        }
+    }
+
+    /**
+     * 验证玩家与地图的碰撞
+     *
+     * @param g            开发模式测试用画笔
+     * @param displacement 移动的距离
+     * @return
+     */
+    public boolean playerCollision(Graphics g, Point displacement) {
         CollisionBox playerCB = Player.getInstance().getCollisionBox();
         CollisionBox tempCB;
-        Boolean b = false;
-        for (MapBlock[] mbs: mapBlocks) {
-            for (MapBlock mb: mbs) {
-                tempCB = new CollisionBox(mb.getCollisionBox(), tempOffset);
-                // DEV_MODE 画出当前碰撞箱
-                if (GameSettings.DEV_MODE) {
+        boolean b = false;
+
+        for (MapBlock[] mbs : mapBlocks) {
+            for (MapBlock mb : mbs) {
+                tempCB = new CollisionBox(mb.getCollisionBox(), displacement);
+                // DEV_MODE 画出所有地图块的碰撞箱
+                if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
                     g.setColor(Color.WHITE);
                     g.drawRect(tempCB.x1, tempCB.y1,
-                    tempCB.width, tempCB.height);
+                            tempCB.width, tempCB.height);
                 }
                 if (tempCB.equals(playerCB)) {
-                    if (GameSettings.DEV_MODE) {
+                    // 画出冲突的碰撞箱
+                    if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
                         g.setColor(Color.RED);
                         g.drawRect(playerCB.x1, playerCB.y1,
                                 playerCB.width, playerCB.height);
+                        g.setColor(Color.RED);
                         g.drawRect(tempCB.x1, tempCB.y1,
                                 tempCB.width, tempCB.height);
                     }
@@ -60,23 +80,56 @@ public class GameMap {
         return b;
     }
 
+    /**
+     * 验证传入的碰撞箱是否和地图碰撞
+     *
+     * @param g  测试用画笔
+     * @param cb 传入的碰撞箱
+     * @return 是否碰撞
+     */
+    public boolean validateCollision(Graphics g, CollisionBox cb) {
+        if (GameSettings.DEV_MODE) {
+            g.setColor(Color.WHITE);
+            g.drawRect(cb.x1, cb.y1,
+                    cb.width, cb.height);
+        }
+
+        boolean b = false;
+        for (MapBlock[] mbs : mapBlocks) {
+            for (MapBlock mb : mbs) {
+                // DEV_MODE 画出当前碰撞箱
+                if (cb.equals(mb.getCollisionBox())) {
+                    if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_CONFLICT_COLLISION_BOX) {
+                        g.setColor(Color.RED);
+                        g.drawRect(mb.getCollisionBox().x1, mb.getCollisionBox().y1,
+                                mb.getCollisionBox().width, mb.getCollisionBox().height);
+                        g.setColor(Color.BLUE);
+                        g.drawRect(cb.x1, cb.y1,
+                                cb.width, cb.height);
+                    }
+                    b = true;
+                }
+            }
+        }
+        return b;
+    }
+
     /*
      * setters & getters
      */
-    public Dimension getOffset() {
+
+    public Point getOffset() {
         return offset;
     }
 
-    public void setOffset(Dimension offset) {
-        GameMap.offset = offset;
-    }
-
     private static GameMap gameMap = null;
+
     private GameMap() {
         if (mapBlocks == null) {
             newMap();
         }
     }
+
     public static GameMap getInstance() {
         if (gameMap == null) {
             gameMap = new GameMap();

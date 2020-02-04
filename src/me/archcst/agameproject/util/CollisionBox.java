@@ -41,6 +41,8 @@ public class CollisionBox {
         height = y2 - y1;
     }
 
+    public CollisionBox() {}
+
     public CollisionBox(CollisionBox collisionBox, Dimension offset) {
         this.x1 = collisionBox.x1 + offset.width;
         this.x2 = collisionBox.x2 + offset.width;
@@ -48,6 +50,22 @@ public class CollisionBox {
         this.y2 = collisionBox.y2 + offset.height;
         this.width = collisionBox.x2 - collisionBox.x1;
         this.height = collisionBox.y2 - collisionBox.y1;
+    }
+
+    public CollisionBox(CollisionBox collisionBox, Point offset) {
+        this.x1 = collisionBox.x1 + offset.x;
+        this.x2 = collisionBox.x2 + offset.x;
+        this.y1 = collisionBox.y1 + offset.y;
+        this.y2 = collisionBox.y2 + offset.y;
+        this.width = collisionBox.x2 - collisionBox.x1;
+        this.height = collisionBox.y2 - collisionBox.y1;
+    }
+
+    public void boxMove(Point offset) {
+        x1 += offset.x;
+        x2 += offset.x;
+        y1 += offset.y;
+        y2 += offset.y;
     }
 
     @Override

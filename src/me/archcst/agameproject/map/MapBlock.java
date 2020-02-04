@@ -14,11 +14,19 @@ import java.awt.*;
 
 public class MapBlock {
     private Image image; // 地图图片
-    public Point mPoint; // 地图上的坐标
-    private CollisionBox collisionBox; // 碰撞箱
+    private Point mPoint; // 屏幕上的坐标
     private Point sPoint; // 图片上的坐标
     private Dimension dimension; // 大小
+    private CollisionBox collisionBox; // 碰撞箱
 
+    /**
+     * 构造地图块
+     * @param image 图片对象
+     * @param dimension 图片上的长和宽
+     * @param mPoint 屏幕上的坐标
+     * @param sPoint 图片上的坐标
+     * @param collisionBox 碰撞箱
+     */
     public MapBlock(Image image, Dimension dimension, Point mPoint, Point sPoint, CollisionBox collisionBox) {
         this.image = image;
         this.dimension = dimension;
@@ -27,20 +35,28 @@ public class MapBlock {
         this.collisionBox = collisionBox;
     }
 
+    /**
+     * 移动地图块
+     * @param offset 偏移量
+     */
+    public void blockMove(Point offset) {
+        mPoint.x += offset.x;
+        mPoint.y += offset.y;
+        // 也要移动碰撞箱
+        collisionBox.boxMove(offset);
+    }
+
     private static Point roadPoint = new Point(96, 0); // 用于先画地板
     private static Dimension roadDimension = new Dimension(48, 48); // 用于先画地板
 
     /**
      * 画出地图块
-     *
-     * @param g      画笔
-     * @param offset 偏移量，用作 player 移动时重绘 block
      */
-    public void draw(Graphics g, Dimension offset) {
+    public void draw(Graphics g) {
         // 先画一层地板
         g.drawImage(image,
-                mPoint.x + offset.width, mPoint.y + offset.height,
-                mPoint.x + roadDimension.width + offset.width, mPoint.y + roadDimension.height + offset.height,
+                mPoint.x, mPoint.y,
+                mPoint.x + roadDimension.width, mPoint.y + roadDimension.height,
                 roadPoint.x, roadPoint.y,
                 roadPoint.x + roadDimension.width, roadPoint.y + roadDimension.height,
                 GamePanel.getInstance());
@@ -48,24 +64,24 @@ public class MapBlock {
         // 再画上面的装饰
         if (sPoint != roadPoint) {
             g.drawImage(image,
-                    mPoint.x + offset.width, mPoint.y + offset.height,
-                    mPoint.x + dimension.width + offset.width, mPoint.y + dimension.height + offset.height,
+                    mPoint.x, mPoint.y,
+                    mPoint.x + dimension.width, mPoint.y + dimension.height,
                     sPoint.x, sPoint.y,
                     sPoint.x + dimension.width, sPoint.y + dimension.height,
                     GamePanel.getInstance());
         }
 
-        // 开发模式画所有地图块
-        if (GameSettings.DEV_SHOW_MAPBLOCKS) {
+        // 开发模式画所有地图块灰色外框
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_BLOCKS) {
             g.setColor(Color.GRAY);
-            g.drawRect(mPoint.x + offset.width, mPoint.y + offset.height,
+            g.drawRect(mPoint.x, mPoint.y,
                     dimension.width, dimension.height);
         }
 
         // 开发模式画碰撞箱
-        if (GameSettings.DEV_MODE) {
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
             g.setColor(Color.BLUE);
-            g.drawRect(collisionBox.x1 + offset.width, collisionBox.y1 + offset.height,
+            g.drawRect(collisionBox.x1, collisionBox.y1,
                     collisionBox.width, collisionBox.height);
         }
 

@@ -6,6 +6,7 @@
 
 package me.archcst.agameproject.datacenter;
 
+import me.archcst.agameproject.avatar.Monster_Slime;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.map.GameMap;
 
@@ -13,10 +14,9 @@ import java.awt.*;
 
 public class DataCenter {
     private static DataCenter dataCenter = null;
-    private PlayerController playerController = PlayerController.getInstance();
     private GameMap gameMap = GameMap.getInstance();
     private Player player = Player.getInstance();
-    private Framer framer = Framer.getInstance();
+    Monster_Slime monster_slime = new Monster_Slime(new Point(48,96));
 
     public static DataCenter getInstance() {
         if (dataCenter == null) {
@@ -28,14 +28,13 @@ public class DataCenter {
     private DataCenter() {}
 
     public void drawFrame(Graphics g) {
-
         gameMap.draw(g);
-        player.act(g, player.getActionString(), framer.getFrame(player.getRefreshRate()));
+        player.draw(g);
+        monster_slime.draw(g);
     }
 
     public void gameProcess(Graphics g) {
-        playerController.playerMoving(g);
+        player.moveCtrl.move(g);
+        monster_slime.moveCtrl.move(g);
     }
-
-
 }

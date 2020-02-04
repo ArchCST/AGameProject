@@ -55,8 +55,8 @@ public class MapGenerator {
         Dimension dimension = new Dimension(BLOCK_SIZE, BLOCK_SIZE);
         Point mPoint = new Point(column * BLOCK_SIZE, line * BLOCK_SIZE);
         Point sPoint = new Point(96, 0); // 默认为路图
-        CollisionBox collisionBox = new CollisionBox(0 ,0 ,0, 0);
-        Boolean obstacleAble = false;
+        CollisionBox collisionBox = new CollisionBox();
+        boolean obstacleAble = false;
 
         // 外墙
         if (line == 0 || line == mapSize.height - 2 || column == 0 || column == mapSize.width - 1) {

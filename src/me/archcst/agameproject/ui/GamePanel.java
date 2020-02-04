@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         DataCenter dataCenter = DataCenter.getInstance();
-        dataCenter.gameProcess(g);
         dataCenter.drawFrame(g);
+        dataCenter.gameProcess(g);
     }
 }

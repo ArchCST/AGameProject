@@ -2,84 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d4331d3-03c6-421e-b883-a6a4f8e0685d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Monster_Slime.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/GameMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapElements.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/util/CollisionBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/util/GameSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/MonsterMoveCtrl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/MoveCtrl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/PlayerMoveCtrl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AGameProject.iws" beforeDir="false" afterPath="$PROJECT_DIR$/AGameProject.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/Demo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/Demo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Action.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Avatar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Avatar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Monster_Slime.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Monster_Slime.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/avatar/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/DataCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/DataCenter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/PlayerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/PlayerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Dungeon_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Dungeon_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Dungeon_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Dungeon_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_A5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_B_EDIT.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Inside_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_A3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_A5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/Outside_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/TileD-Dungeons.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/TileE-InnerTown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/TileE-OutsideTown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/World_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/World_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/World_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/static/img/map/World_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GameFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GameFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/Framer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/Framer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/datacenter/PlayerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/map/GameMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/map/GameMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/map/MapBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/map/MapBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GameKeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GameKeyListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/ui/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/util/GameLoader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/Demo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/util/CollisionBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/util/CollisionBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/util/GameSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AGameProject/me/archcst/agameproject/util/GameSettings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Action.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Avatar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Avatar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Monster_Slime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Monster_Slime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/avatar/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/DataCenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/DataCenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Dungeon_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Dungeon_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Dungeon_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Dungeon_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_A5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_B_EDIT.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Inside_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_A3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_A4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_A5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/Outside_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/TileD-Dungeons.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/TileE-InnerTown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/TileE-OutsideTown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/World_A1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/World_A2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/World_B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/static/img/map/World_C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/Framer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/Framer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/datacenter/PlayerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/map/GameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/GameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/map/MapGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GameKeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GameKeyListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/ui/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/util/GameLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/util/CollisionBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/util/CollisionBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/archcst/agameproject/util/GameSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/archcst/agameproject/util/GameSettings.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +79,7 @@
       <module name="AGameProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="me.archcst.agameproject.datacenter.*" />
+          <option name="PATTERN" value="me.archcst.agameproject.avatar.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -160,9 +113,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MonsterMoveCtrl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.archcst.agameproject.avatar.MonsterMoveCtrl" />
+      <module name="AGameProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.archcst.agameproject.avatar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Monster_Slime" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.archcst.agameproject.avatar.Monster_Slime" />
+      <module name="AGameProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.archcst.agameproject.avatar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Demo" />
+        <item itemvalue="Application.MonsterMoveCtrl" />
+        <item itemvalue="Application.Monster_Slime" />
         <item itemvalue="Application.DataCenter" />
         <item itemvalue="Application.GameFrame" />
       </list>
@@ -190,7 +171,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579138929641</updated>
-      <workItem from="1579138935517" duration="83946000" />
+      <workItem from="1579138935517" duration="98352000" />
+      <workItem from="1580786247033" duration="12150000" />
+      <workItem from="1580800315633" duration="6216000" />
     </task>
     <servers />
   </component>
@@ -198,46 +181,54 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1580702411442">
+    <state x="304" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580793834418">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="304" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580793834418" />
+    <state x="579" y="379" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1580786519461">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="579" y="379" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580786519461" />
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1580804521889">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="653" y="235" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580627383333" />
     <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579488805231" />
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580702411442" />
-    <state x="508" y="23" width="622" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580630793908">
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580804521889" />
+    <state x="508" y="23" width="622" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580788574771">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="508" y="0" width="622" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580628617675" />
     <state x="508" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579586636025" />
-    <state x="508" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580630793908" />
-    <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1580636398856">
+    <state x="508" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580788574771" />
+    <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1580789126212">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580636398856" />
-    <state width="1638" height="265" key="GridCell.Tab.0.bottom" timestamp="1580715256251">
+    <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580789126212" />
+    <state width="1638" height="105" key="GridCell.Tab.0.bottom" timestamp="1580806834676">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="280" key="GridCell.Tab.0.bottom/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580629781454" />
     <state width="1638" height="280" key="GridCell.Tab.0.bottom/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579585723662" />
-    <state width="1638" height="265" key="GridCell.Tab.0.bottom/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580715256251" />
-    <state width="1638" height="265" key="GridCell.Tab.0.center" timestamp="1580715256249">
+    <state width="1638" height="105" key="GridCell.Tab.0.bottom/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580806834676" />
+    <state width="1638" height="105" key="GridCell.Tab.0.center" timestamp="1580806834674">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="280" key="GridCell.Tab.0.center/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580629781452" />
     <state width="1638" height="280" key="GridCell.Tab.0.center/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579585723660" />
-    <state width="1638" height="265" key="GridCell.Tab.0.center/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580715256249" />
-    <state width="1638" height="265" key="GridCell.Tab.0.left" timestamp="1580715256249">
+    <state width="1638" height="105" key="GridCell.Tab.0.center/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580806834674" />
+    <state width="1638" height="105" key="GridCell.Tab.0.left" timestamp="1580806834674">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="280" key="GridCell.Tab.0.left/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580629781451" />
     <state width="1638" height="280" key="GridCell.Tab.0.left/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579585723660" />
-    <state width="1638" height="265" key="GridCell.Tab.0.left/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580715256249" />
-    <state width="1638" height="265" key="GridCell.Tab.0.right" timestamp="1580715256250">
+    <state width="1638" height="105" key="GridCell.Tab.0.left/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580806834674" />
+    <state width="1638" height="105" key="GridCell.Tab.0.right" timestamp="1580806834675">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="280" key="GridCell.Tab.0.right/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580629781453" />
     <state width="1638" height="280" key="GridCell.Tab.0.right/-1920.0.1920.1080/0.23.1680.1027@0.23.1680.1027" timestamp="1579585723661" />
-    <state width="1638" height="265" key="GridCell.Tab.0.right/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580715256250" />
+    <state width="1638" height="105" key="GridCell.Tab.0.right/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580806834675" />
     <state width="1638" height="345" key="GridCell.Tab.1.bottom" timestamp="1580714151240">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -259,13 +250,13 @@
     </state>
     <state x="183" y="133" key="SettingsEditor/-1920.0.1920.1080/0.0.1680.1050@0.0.1680.1050" timestamp="1580628574230" />
     <state x="183" y="153" key="SettingsEditor/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1579179589475" />
-    <state x="570" y="275" width="570" height="524" key="StructurePopup" timestamp="1580706051430">
+    <state x="570" y="275" width="570" height="524" key="StructurePopup" timestamp="1580804776920">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="570" y="275" width="570" height="524" key="StructurePopup/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580706051430" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1580631502587">
+    <state x="570" y="275" width="570" height="524" key="StructurePopup/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580804776920" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1580795461776">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580631502587" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/-1920.23.1920.1057/0.23.1680.1027@0.23.1680.1027" timestamp="1580795461776" />
   </component>
 </project>

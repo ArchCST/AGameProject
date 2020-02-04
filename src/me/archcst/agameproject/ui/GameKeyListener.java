@@ -6,7 +6,7 @@
 
 package me.archcst.agameproject.ui;
 
-import me.archcst.agameproject.datacenter.PlayerController;
+import me.archcst.agameproject.avatar.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,43 +20,42 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        PlayerController playerController = PlayerController.getInstance();
-        System.out.println("KeyPressed");
+        Player player = Player.getInstance();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
-                playerController.setDirections("up", true);
+                player.moveCtrl.setDirection("up", true);
                 break;
             case KeyEvent.VK_A:
-                playerController.setDirections("left", true);
+                player.moveCtrl.setDirection("left", true);
                 break;
             case KeyEvent.VK_D:
-                playerController.setDirections("right", true);
+                player.moveCtrl.setDirection("right", true);
                 break;
             case KeyEvent.VK_S:
-                playerController.setDirections("down", true);
+                player.moveCtrl.setDirection("down", true);
                 break;
                 // todo 死亡
             case KeyEvent.VK_X:
-                playerController.die();
+                player.die();
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        PlayerController playerController = PlayerController.getInstance();
+        Player player = Player.getInstance();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
-                playerController.setDirections("up", false);
+                player.moveCtrl.setDirection("up", false);
                 break;
             case KeyEvent.VK_A:
-                playerController.setDirections("left", false);
+                player.moveCtrl.setDirection("left", false);
                 break;
             case KeyEvent.VK_D:
-                playerController.setDirections("right", false);
+                player.moveCtrl.setDirection("right", false);
                 break;
             case KeyEvent.VK_S:
-                playerController.setDirections("down", false);
+                player.moveCtrl.setDirection("down", false);
                 break;
         }
     }

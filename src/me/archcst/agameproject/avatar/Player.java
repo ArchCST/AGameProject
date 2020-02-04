@@ -6,6 +6,8 @@
 
 package me.archcst.agameproject.avatar;
 
+import me.archcst.agameproject.datacenter.Framer;
+import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -16,13 +18,10 @@ public class Player extends Avatar {
     private static Player player = null;
 
     public static Player getInstance(){
-        System.out.println("players getInstantce");
         if (player == null) {
             synchronized (Player.class) {
                 if (player == null) {
                     player = new Player();
-                    player.setAlive(true);
-                    player.loadPlayer();
                 }
             }
         }
@@ -32,43 +31,45 @@ public class Player extends Avatar {
     private Player() {
         zoom = 1;
         dimension = new Dimension(48, 48);
-        actionString = "walk_down";
-        walkSpeed = 3;
+        currentAction = "walk_down";
+        walkSpeed = 1;
         refreshRate = 0;
+        alive = true;
+        moveCtrl = new PlayerMoveCtrl(this);
+
+        loadAvatarMovements(new Point(288, 0),
+                new File("src/me/archcst/agameproject/static/img/characters/Actor1.png"));
+
+        loadAvatarDie(new Point(0, 96),
+                new File("src/me/archcst/agameproject/static/img/characters/Damage1.png"));
+
         // 坐标（屏幕正中）
-        pPoint = new Point((GameSettings.GAME_WIDTH - dimension.width) /2,
+        location = new Point((GameSettings.GAME_WIDTH - dimension.width) /2,
                 (GameSettings.GAME_HEIGHT - dimension.height) / 2);
 
         // 碰撞箱
-        collisionBox = new CollisionBox(pPoint.x + 14, pPoint.y + 36,
-                pPoint.x + dimension.width - 14, pPoint.y + dimension.height);
+        collisionBox = new CollisionBox(location.x + 13, location.y + 36,
+                location.x + dimension.width - 14, location.y + dimension.height);
+
     }
 
+    @Override
+    public void draw(Graphics g) {
+        Action action = actions.get(currentAction);
 
-    // 加载玩家角色的图片和 actions 对象组数
-    public void loadPlayer() {
-        Point sPoint = new Point(288, 0); // 素材图上的坐标
-        File playerFile = new File("src/me/archcst/agameproject/static/img/characters/Actor1.png");
+        int frame = Framer.getInstance().getFrame(refreshRate) % action.getFrames();
+        g.drawImage(action.getImage(),
+                location.x, location.y,
+                location.x + (int) (dimension.width * zoom), location.y + (int) (dimension.height * zoom),
+                action.sx1(frame), action.sy1(frame),
+                action.sx2(frame), action.sy2(frame),
+                GamePanel.getInstance());
 
-        actions.put("walk_down", new Action(player,
-                playerFile, sPoint, 3));
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
+            g.setColor(Color.GREEN);
+            g.drawRect(collisionBox.x1, collisionBox.y1,
+                    collisionBox.width, collisionBox.height);
+        }
 
-        sPoint.y += 48;
-        actions.put("walk_left", new Action(player,
-                playerFile, sPoint, 3));
-
-        sPoint.y += 48;
-        actions.put("walk_right", new Action(player,
-                playerFile, sPoint, 3));
-
-        sPoint.y += 48;
-        actions.put("walk_up", new Action(player,
-                playerFile, sPoint, 3));
-
-        File damageFile = new File("src/me/archcst/agameproject/static/img/characters/Damage1.png");
-        sPoint.x = 0;
-        sPoint.y = 96;
-        actions.put("die", new Action(player,
-                damageFile, sPoint, 3));
     }
 }

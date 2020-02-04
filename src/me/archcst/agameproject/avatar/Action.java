@@ -53,50 +53,30 @@ public class Action {
         }
     }
 
-
-    /**
-     * 画出该动作
-     * @param g 画笔
-     * @param frame 画第几帧
-     * @param point GamePanel 上的坐标
+    /*
+     * setters & getters
      */
-    public void draw(Graphics g, int frame, Point point) {
-        /*
-         * todo 自定义异常
-         */
-
-        frame = frame % frames;
-        g.drawImage(image,
-                avatar.getpPoint().x, avatar.getpPoint().y,
-                avatar.getpPoint().x + avatar.getDimension().width, avatar.getpPoint().y + avatar.getDimension().height,
-                animationArray[frame][0], animationArray[frame][1],
-                animationArray[frame][2], animationArray[frame][3],
-                GamePanel.getInstance());
+    public int getFrames() {
+        return frames;
     }
 
-    /**
-     * 画出该动作，可放大
-     * @param g 画笔
-     * @param frame 画第几帧
-     * @param zoom 放大倍数
-     */
-    public void draw(Graphics g, int frame, double zoom) {
-        /*
-         * todo 自定义异常
-         */
+    public Image getImage() {
+        return image;
+    }
 
-        frame = frame % frames;
-        g.drawImage(image,
-                avatar.getpPoint().x, avatar.getpPoint().y,
-                avatar.getpPoint().x + (int) (avatar.getDimension().width * zoom), avatar.getpPoint().y + (int) (avatar.getDimension().height * zoom),
-                animationArray[frame][0], animationArray[frame][1],
-                animationArray[frame][2], animationArray[frame][3],
-                GamePanel.getInstance());
+    public int sx1(int frame) {
+        return animationArray[frame][0];
+    }
 
-        if (GameSettings.DEV_MODE) {
-            g.setColor(Color.GREEN);
-            g.drawRect(avatar.getCollisionBox().x1, avatar.getCollisionBox().y1,
-                    avatar.getCollisionBox().width, avatar.getCollisionBox().height);
-        }
+    public int sy1(int frame) {
+        return animationArray[frame][1];
+    }
+
+    public int sx2(int frame) {
+        return animationArray[frame][2];
+    }
+
+    public int sy2(int frame) {
+        return animationArray[frame][3];
     }
 }

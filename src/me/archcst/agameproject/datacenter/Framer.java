@@ -24,7 +24,7 @@ public class Framer {
     }
 
     public synchronized int nextFrame() {
-        if (++frame > 250) {
+        if (++frame > 25000000) {
             frame = 0;
         }
         return frame;

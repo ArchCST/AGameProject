@@ -12,7 +12,7 @@ import me.archcst.agameproject.util.CollisionBox;
 import java.awt.*;
 import java.io.File;
 
-public class Monster_Slime extends Avatar {
+public class Monster_Slime extends Monster {
     public Monster_Slime(Point location) {
         moveCtrl = new MonsterMoveCtrl(this, 500, 1000);
         Point mapOffset = GameMap.getInstance().getOffset();
@@ -26,6 +26,7 @@ public class Monster_Slime extends Avatar {
         alive = true;
 
         // 碰撞箱
+//        setCollisionBox(0.8, 0.3, new Point(0, 5));
         collisionBox = new CollisionBox(location.x + 13 + mapOffset.x, location.y + 30 + mapOffset.y,
                 location.x + dimension.width - 14 + mapOffset.x, location.y + dimension.height + mapOffset.y);
 

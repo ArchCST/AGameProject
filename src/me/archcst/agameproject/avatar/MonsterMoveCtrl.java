@@ -39,15 +39,29 @@ public class MonsterMoveCtrl extends MoveCtrl{
 
     private void changeDirection() {
         clearDirection();
-
-        int mainDirection = r.nextInt(4);
-        urdl[mainDirection] = true;
+        int mainDirection = r.nextInt(4); // 主方向，也是面朝方向
+        // 副方向基于主方向的偏差，true为 1，false为 -1, 无副方向为0
+        int viceDirection = 0;
         if (r.nextBoolean()) {
-            int viceDirection = (r.nextBoolean() ? 1 : -1) + mainDirection;
-            if (viceDirection > 3) viceDirection -= 4;
-            if (viceDirection < 0) viceDirection += 4;
-            urdl[viceDirection] = true;
+            viceDirection = r.nextBoolean()? 1 : -1;
         }
+
+        viceDirection += mainDirection;
+
+        if (viceDirection > urdl.length - 1) viceDirection = 0;
+        if (viceDirection < 0) viceDirection = urdl.length - 1;
+
+        urdl[mainDirection] = true;
+        urdl[viceDirection] = true;
+
+        // 设置角色方向
+        String direction = "";
+        if (mainDirection == 0) direction = "up";
+        if (mainDirection == 1) direction = "right";
+        if (mainDirection == 2) direction = "down";
+        if (mainDirection == 3) direction = "left";
+
+        setDirection(direction, true);
     }
 
     private void clearDirection() {
@@ -57,6 +71,7 @@ public class MonsterMoveCtrl extends MoveCtrl{
         urdl[3] = false;
     }
 
+    // 角色单次随机移动的时长
     private void randomTime() {
         randomTime = r.nextInt((int) (maxMoveTime - minMoveTime)) + minMoveTime;
     }
@@ -86,7 +101,7 @@ public class MonsterMoveCtrl extends MoveCtrl{
                 displacement.y = 0;
             }
         }
-        if (urdl[0]) { // 左
+        if (urdl[3]) { // 左
             displacement.x = -avatar.walkSpeed;
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.validateCollision(g, tempCB)) {

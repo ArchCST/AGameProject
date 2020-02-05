@@ -43,6 +43,11 @@ public class CollisionBox {
 
     public CollisionBox() {}
 
+    public boolean isEmpty() {
+        return x2 - x1 == 0 || y2 - y1 == 0;
+    }
+
+
     public CollisionBox(CollisionBox collisionBox, Dimension offset) {
         this.x1 = collisionBox.x1 + offset.width;
         this.x2 = collisionBox.x2 + offset.width;

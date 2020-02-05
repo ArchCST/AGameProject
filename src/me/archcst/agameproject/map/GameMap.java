@@ -6,16 +6,16 @@
 
 package me.archcst.agameproject.map;
 
-import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
+import java.util.Random;
 
 public class GameMap {
     public static final int BLOCK_SIZE = 48; // 地图块大小（px）
-    private Point offset = new Point(); // player 移动时地图的偏移量
+    private Point offset = new Point(); // 地图的整体偏移量
     private static MapBlock[][] mapBlocks; // 地图数组
 
     public void newMap() {
@@ -33,12 +33,19 @@ public class GameMap {
         }
     }
 
+    /**
+     * 移动整张地图
+     * @param offset 偏移量
+     */
     public void mapMove(Point offset) {
         for (MapBlock[] mbs : mapBlocks) {
             for (MapBlock mb : mbs) {
                 mb.blockMove(offset);
             }
         }
+        // 设置地图偏移量
+        this.offset.x += offset.x;
+        this.offset.y += offset.y;
     }
 
     /**
@@ -114,10 +121,24 @@ public class GameMap {
         return b;
     }
 
+    public Point randomEmptyBlock() {
+        Point point = new Point(); // 返回值
+        Random r = new Random();
+        int x, y;
+        do {
+            x = r.nextInt(mapBlocks[0].length);
+            y = r.nextInt(mapBlocks.length);
+            if (mapBlocks[y][x].getCollisionBox().isEmpty()) {
+                point.x = x * BLOCK_SIZE;
+                point.y = y * BLOCK_SIZE;
+            }
+        } while (!mapBlocks[y][x].getCollisionBox().isEmpty());
+        return point;
+    }
+
     /*
      * setters & getters
      */
-
     public Point getOffset() {
         return offset;
     }

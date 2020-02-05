@@ -7,6 +7,7 @@
 package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.datacenter.Framer;
+import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -32,8 +33,8 @@ public class Player extends Avatar {
         zoom = 1;
         dimension = new Dimension(48, 48);
         currentAction = "walk_down";
-        walkSpeed = 1;
-        refreshRate = 0;
+        walkSpeed = 2;
+        refreshRate = 16;
         alive = true;
         moveCtrl = new PlayerMoveCtrl(this);
 
@@ -43,33 +44,16 @@ public class Player extends Avatar {
         loadAvatarDie(new Point(0, 96),
                 new File("src/me/archcst/agameproject/static/img/characters/Damage1.png"));
 
+        location = new Point(
+                (GameMap.getInstance().getMapSize().width / 2) * GameMap.BLOCK_SIZE,
+                (GameMap.getInstance().getMapSize().height / 2) * GameMap.BLOCK_SIZE);
         // 坐标（屏幕正中）
-        location = new Point((GameSettings.GAME_WIDTH - dimension.width) /2,
-                (GameSettings.GAME_HEIGHT - dimension.height) / 2);
+//        location = new Point((GameSettings.GAME_WIDTH - dimension.width) /2,
+//                (GameSettings.GAME_HEIGHT - dimension.height) / 2);
 
         // 碰撞箱
         collisionBox = new CollisionBox(location.x + 13, location.y + 36,
                 location.x + dimension.width - 14, location.y + dimension.height);
-
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        Action action = actions.get(currentAction);
-
-        int frame = Framer.getInstance().getFrame(refreshRate) % action.getFrames();
-        g.drawImage(action.getImage(),
-                location.x, location.y,
-                location.x + (int) (dimension.width * zoom), location.y + (int) (dimension.height * zoom),
-                action.sx1(frame), action.sy1(frame),
-                action.sx2(frame), action.sy2(frame),
-                GamePanel.getInstance());
-
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
-            g.setColor(Color.GREEN);
-            g.drawRect(collisionBox.x1, collisionBox.y1,
-                    collisionBox.width, collisionBox.height);
-        }
 
     }
 }

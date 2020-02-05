@@ -9,6 +9,7 @@ package me.archcst.agameproject.avatar;
 import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GamePanel;
+import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -31,7 +32,24 @@ public abstract class Avatar {
     public Avatar() {
     }
 
-    protected abstract void draw(Graphics g);
+    public void draw(Graphics g){
+        Camera camera = Camera.getInstance();
+        Action action = actions.get(currentAction);
+
+        int frame = Framer.getInstance().getFrame(refreshRate) % action.getFrames();
+        g.drawImage(action.getImage(),
+                camera.cameraedX(location.x), camera.cameraedY(location.y),
+                camera.cameraedX(location.x) + (int) (dimension.width * zoom), camera.cameraedY(location.y) + (int) (dimension.height * zoom),
+                action.sx1(frame), action.sy1(frame),
+                action.sx2(frame), action.sy2(frame),
+                GamePanel.getInstance());
+
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
+            g.setColor(Color.GREEN);
+            g.drawRect(camera.cameraedX(collisionBox.x1), camera.cameraedY(collisionBox.y1),
+                    collisionBox.width, collisionBox.height);
+        }
+    };
 
     protected void loadAvatarMovements(Point sPoint, File imageFile) {
         actions.put("walk_down", new Action(this,

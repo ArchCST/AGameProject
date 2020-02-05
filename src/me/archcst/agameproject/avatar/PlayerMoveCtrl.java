@@ -7,6 +7,8 @@
 package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.util.Camera;
+import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 
@@ -15,38 +17,24 @@ public class PlayerMoveCtrl extends MoveCtrl {
         super(avatar);
     }
 
-
     @Override
     public void move(Graphics g) {
-        GameMap gameMap = GameMap.getInstance();
-        Point displacement = new Point();
-        // 角色不动时不刷新动画
-        if (!urdl[0] && !urdl[1] && !urdl[2] && !urdl[3]) {
-            avatar.setRefreshRate(0);
-        } else {
-            avatar.setRefreshRate(12);
+        validateAndMove(g);
+
+        Camera camera = Camera.getInstance();
+
+        Point beacon = new Point();
+        if (up() || right() || down() || left()) {
+            if (up()) beacon.y = -GameSettings.BEACON_DISPLACEMENT;
+            if (right()) beacon.x = GameSettings.BEACON_DISPLACEMENT;
+            if (down()) beacon.y = GameSettings.BEACON_DISPLACEMENT;
+            if (left()) beacon.x = -GameSettings.BEACON_DISPLACEMENT;
         }
 
-        if (urdl[0]) { // 上
-            displacement.y = avatar.getWalkSpeed();
-            displacement.y = gameMap.playerCollision(g, displacement) ? 0 : displacement.y;
-        }
+        beacon.x += avatar.location.x;
+        beacon.y += avatar.location.y;
 
-        if (urdl[1]) { // 右
-            displacement.x = -avatar.getWalkSpeed();
-            displacement.x = gameMap.playerCollision(g, displacement) ? 0 : displacement.x;
-        }
+        camera.setBeacon(beacon);
 
-        if (urdl[2]) { // 下
-            displacement.y = -avatar.getWalkSpeed();
-            displacement.y = gameMap.playerCollision(g, displacement) ? 0 : displacement.y;
-        }
-
-        if (urdl[3]) { // 左
-            displacement.x = avatar.getWalkSpeed();
-            displacement.x = gameMap.playerCollision(g, displacement) ? 0 : displacement.x;
-        }
-
-        gameMap.mapMove(displacement);
     }
 }

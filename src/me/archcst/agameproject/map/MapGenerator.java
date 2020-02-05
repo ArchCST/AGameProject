@@ -10,7 +10,6 @@ import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
 import javax.imageio.ImageIO;
-import javax.sql.PooledConnection;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;

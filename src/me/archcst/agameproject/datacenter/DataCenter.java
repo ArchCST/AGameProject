@@ -10,15 +10,16 @@ import me.archcst.agameproject.avatar.Monster;
 import me.archcst.agameproject.avatar.Monster_Slime;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.util.Camera;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class DataCenter {
     private static DataCenter dataCenter = null;
-    private GameMap gameMap = GameMap.getInstance();
-    private Player player = Player.getInstance();
-    private ArrayList<Monster> monsters = new ArrayList<>();
+    private GameMap gameMap;
+    private Player player;
+    private ArrayList<Monster> monsters;
 
     public static DataCenter getInstance() {
         if (dataCenter == null) {
@@ -28,6 +29,9 @@ public class DataCenter {
     }
 
     private DataCenter() {
+        gameMap = GameMap.getInstance();
+        player = Player.getInstance();
+        monsters = new ArrayList<>();
         monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
         monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
         monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
@@ -35,6 +39,7 @@ public class DataCenter {
     }
 
     public void drawFrame(Graphics g) {
+        Camera.getInstance().updateCamera();
         gameMap.draw(g);
         player.draw(g);
         for (Monster m:monsters) {
@@ -45,7 +50,7 @@ public class DataCenter {
     public void gameProcess(Graphics g) {
         player.moveCtrl.move(g);
         for (Monster m:monsters) {
-//            m.moveCtrl.move(g);
+            m.moveCtrl.move(g);
         }
     }
 

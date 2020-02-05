@@ -26,7 +26,10 @@ public class MonsterMoveCtrl extends MoveCtrl{
         randomTime();
     }
 
-
+    /**
+     * 怪物的移动
+     * @param g 测试用画笔
+     */
     public void move(Graphics g) {
         if (System.currentTimeMillis() - startTime < randomTime) {
             validateAndMove(g);
@@ -37,6 +40,9 @@ public class MonsterMoveCtrl extends MoveCtrl{
         }
     }
 
+    /**
+     * 怪物的urdl控制，同时设置面朝方向
+     */
     private void changeDirection() {
         clearDirection();
         int mainDirection = r.nextInt(4); // 主方向，也是面朝方向
@@ -74,42 +80,6 @@ public class MonsterMoveCtrl extends MoveCtrl{
     // 角色单次随机移动的时长
     private void randomTime() {
         randomTime = r.nextInt((int) (maxMoveTime - minMoveTime)) + minMoveTime;
-    }
-
-    private void validateAndMove(Graphics g) {
-        GameMap gameMap = GameMap.getInstance();
-        CollisionBox tempCB;
-        Point displacement = new Point();
-        if (urdl[0]) { // 上
-            displacement.y = -avatar.walkSpeed;
-            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
-                displacement.y = 0;
-            }
-        }
-        if (urdl[1]) { // 右
-            displacement.x = avatar.walkSpeed;
-            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
-                displacement.x = 0;
-            }
-        }
-        if (urdl[2]) { // 下
-            displacement.y = avatar.walkSpeed;
-            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
-                displacement.y = 0;
-            }
-        }
-        if (urdl[3]) { // 左
-            displacement.x = -avatar.walkSpeed;
-            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
-                displacement.x = 0;
-            }
-        }
-
-        avatar.avatarMove(displacement);
     }
 
 }

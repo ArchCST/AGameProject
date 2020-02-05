@@ -8,6 +8,8 @@ package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.util.CollisionBox;
+import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 
@@ -21,6 +23,48 @@ public abstract class MoveCtrl {
 
 
     public abstract void move(Graphics g);
+
+    /**
+     * 确认和地图的碰撞箱不冲突，然后按照 urdl 设置的方向移动
+     * @param g 测试用画笔
+     */
+    protected void validateAndMove(Graphics g) {
+        GameMap gameMap = GameMap.getInstance();
+        CollisionBox tempCB;
+        Point displacement = new Point();
+
+        setAvatarRefreshRate();
+        if (up() && !down()) { // 上
+            displacement.y = -avatar.walkSpeed;
+            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
+            if (gameMap.validateCollision(g, tempCB)) {
+                displacement.y = 0;
+            }
+        }
+        if (right() && !left()) { // 右
+            displacement.x = avatar.walkSpeed;
+            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
+            if (gameMap.validateCollision(g, tempCB)) {
+                displacement.x = 0;
+            }
+        }
+        if (down() && !up()) { // 下
+            displacement.y = avatar.walkSpeed;
+            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
+            if (gameMap.validateCollision(g, tempCB)) {
+                displacement.y = 0;
+            }
+        }
+        if (left() && !right()) { // 左
+            displacement.x = -avatar.walkSpeed;
+            tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
+            if (gameMap.validateCollision(g, tempCB)) {
+                displacement.x = 0;
+            }
+        }
+
+        avatar.avatarMove(displacement);
+    }
 
     /**
      * 根据传入字符串设置人物方向
@@ -76,6 +120,14 @@ public abstract class MoveCtrl {
             if (down()) avatar.setCurrentAction("walk_down");
             if (left()) avatar.setCurrentAction("walk_left");
             if (right()) avatar.setCurrentAction("walk_right");
+        }
+    }
+
+    private void setAvatarRefreshRate() {
+        if (up() || right() || down() || left()) {
+            avatar.setRefreshRate(GameSettings.AVATAR_REFRESH_RATE);
+        } else {
+            avatar.setRefreshRate(0);
         }
     }
 

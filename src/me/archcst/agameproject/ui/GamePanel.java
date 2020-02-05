@@ -8,6 +8,7 @@ package me.archcst.agameproject.ui;
 
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.Framer;
+import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.GameSettings;
 
 import javax.swing.*;
@@ -58,5 +59,10 @@ public class GamePanel extends JPanel implements Runnable{
         DataCenter dataCenter = DataCenter.getInstance();
         dataCenter.drawFrame(g);
         dataCenter.gameProcess(g);
+
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_PANEL_CENTRAL_POINT) {
+            g.setColor(Color.WHITE);
+            g.drawString("╋", getWidth() / 2 - 8, getHeight() / 2 + 8);
+        }
     }
 }

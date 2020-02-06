@@ -41,7 +41,6 @@ public class Framer {
      */
     public int getFrame(int speed) {
         if (speed != 0) {
-            System.out.println(frame / speed);
             return frame / speed;
         } else {
             return 1;

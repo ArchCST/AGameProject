@@ -6,7 +6,8 @@
 
 package me.archcst.agameproject.map;
 
-import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.avatar.Avatar;
+import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -33,11 +34,10 @@ public class GameMap {
     /**
      * 验证传入的碰撞箱是否和地图碰撞
      *
-     * @param g  测试用画笔
      * @param cb 传入的碰撞箱
      * @return 是否碰撞
      */
-    public boolean validateCollision(Graphics g, CollisionBox cb) {
+    public boolean mapCollision(Graphics g, CollisionBox cb) {
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_TEMP_COLLISION_BOX) {
             Camera camera = Camera.getInstance();
             g.setColor(Color.WHITE);
@@ -48,14 +48,14 @@ public class GameMap {
         boolean b = false;
         for (MapBlock[] mbs : mapBlocks) {
             for (MapBlock mb : mbs) {
-                // DEV_MODE 画出当前碰撞箱
                 if (cb.equals(mb.getCollisionBox())) {
+                    // DEV_MODE 画出当前碰撞箱
                     if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_CONFLICT_COLLISION_BOX) {
                         Camera camera = Camera.getInstance();
                         g.setColor(Color.RED);
                         g.drawRect(camera.cameraedX(mb.getCollisionBox().x1), camera.cameraedY(mb.getCollisionBox().y1),
                                 mb.getCollisionBox().width, mb.getCollisionBox().height);
-                        g.setColor(Color.RED);
+
                         g.drawRect(camera.cameraedX(cb.x1), camera.cameraedY(cb.y1),
                                 cb.width, cb.height);
                     }
@@ -68,7 +68,7 @@ public class GameMap {
 
     public Point randomEmptyBlock() {
         Point point = new Point(); // 返回值
-        Random r = new Random();
+        Random r = GameSettings.r;
         int x, y;
         do {
             x = r.nextInt(mapBlocks[0].length);
@@ -78,6 +78,24 @@ public class GameMap {
                 point.y = y * BLOCK_SIZE;
             }
         } while (!mapBlocks[y][x].getCollisionBox().isEmpty());
+        return point;
+    }
+
+
+    /**
+     * 获取一个随机能放下怪物的坐标
+     * @return
+     */
+    public Point randomLocation(Graphics g, Avatar avatar) {
+        Point point = new Point(); // 返回值
+        Random r = GameSettings.r;
+        CollisionBox tempCB = null;
+        do {
+            point.x = (r.nextInt(mapBlocks[0].length - 5) + 2) * GameSettings.BLOCK_SIZE;
+            point.y = (r.nextInt(mapBlocks.length - 3) + 1) * GameSettings.BLOCK_SIZE;
+            tempCB = new CollisionBox(avatar.getCollisionBox(), point);
+        } while (mapCollision(g, tempCB));
+
         return point;
     }
 

@@ -7,7 +7,6 @@
 package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.datacenter.Framer;
-import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
@@ -23,7 +22,7 @@ public abstract class Avatar {
     protected String currentAction; // 当前动作的 Key
     protected int walkSpeed; // 移动速度
     protected int refreshRate; // 动画刷新率
-    protected Dimension dimension; // 原始大小
+    protected Dimension sSize; // 原始大小
     protected double zoom; // 角色放大系数
     protected CollisionBox collisionBox; // 碰撞箱
     protected Boolean alive; // 是否存活
@@ -32,14 +31,14 @@ public abstract class Avatar {
     public Avatar() {
     }
 
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         Camera camera = Camera.getInstance();
         Action action = actions.get(currentAction);
 
         int frame = Framer.getInstance().getFrame(refreshRate) % action.getFrames();
         g.drawImage(action.getImage(),
                 camera.cameraedX(location.x), camera.cameraedY(location.y),
-                camera.cameraedX(location.x) + (int) (dimension.width * zoom), camera.cameraedY(location.y) + (int) (dimension.height * zoom),
+                camera.cameraedX(location.x) + (int) (sSize.width * zoom), camera.cameraedY(location.y) + (int) (sSize.height * zoom),
                 action.sx1(frame), action.sy1(frame),
                 action.sx2(frame), action.sy2(frame),
                 GamePanel.getInstance());
@@ -49,7 +48,9 @@ public abstract class Avatar {
             g.drawRect(camera.cameraedX(collisionBox.x1), camera.cameraedY(collisionBox.y1),
                     collisionBox.width, collisionBox.height);
         }
-    };
+    }
+
+    ;
 
     protected void loadAvatarMovements(Point sPoint, File imageFile) {
         actions.put("walk_down", new Action(this,
@@ -75,6 +76,7 @@ public abstract class Avatar {
 
     /**
      * 移动角色
+     *
      * @param offset 偏移量
      */
     public void avatarMove(Point offset) {
@@ -93,33 +95,32 @@ public abstract class Avatar {
 
     /**
      * 设置碰撞箱
-     * @param widthPercent 宽度百分比
+     *
+     * @param widthPercent  宽度百分比
      * @param heightPercent 高度百分比
-     * @param rightPercent 右移百分比
-     * @param downPercent 下移百分比
+     * @param rightPercent  右移百分比
+     * @param downPercent   下移百分比
      */
     public void setCollisionBox(double widthPercent, double heightPercent, double rightPercent, double downPercent) {
-        CollisionBox collisionBox = new CollisionBox();
-        int width = (int) (dimension.width * widthPercent);
-        int height = (int) (dimension.height * heightPercent);
-        collisionBox.x1 = location.x + (dimension.width - width) / 2;
-        collisionBox.y1 = location.y + (dimension.height - height) / 2;
-        collisionBox.x2 = location.x + width;
-        collisionBox.y2 = location.x + height;
+        int width = (int) (sSize.width * zoom * widthPercent);
+        int height = (int) (sSize.height * zoom * heightPercent);
+        int x1 = location.x + (int)(sSize.width * zoom  - width) / 2;
+        int y1 = location.y + (int)(sSize.height * zoom - height) / 2;
+        collisionBox.setCollisionBox(x1, y1, x1 + width, y1 + height);
 
         // 距离图片中心的偏移量
         Point offset = new Point();
-        offset.x = dimension.width / 2 + (int)(dimension.width * rightPercent);
-        offset.y = dimension.height / 2 + (int)(dimension.height * downPercent);
+        offset.x = (int) (sSize.width * zoom * rightPercent);
+        offset.y = (int) (sSize.height * zoom * downPercent);
         collisionBox.boxMove(offset);
     }
 
-    public Dimension getDimension() {
-        return dimension;
+    public Dimension getsSize() {
+        return sSize;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
+    public void setsSize(Dimension sSize) {
+        this.sSize = sSize;
     }
 
     public Boolean getAlive() {
@@ -155,8 +156,13 @@ public abstract class Avatar {
     }
 
     public void setLocation(int x, int y) {
+        Point offset = new Point();
+        offset.x = x - location.x;
+        offset.y = y - location.y;
+
         location.x = x;
         location.y = y;
+        collisionBox.boxMove(offset);
     }
 
     public String getCurrentAction() {

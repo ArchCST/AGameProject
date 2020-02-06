@@ -6,14 +6,30 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.ui.GamePanel;
+import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 
 public abstract class Monster extends Avatar {
+
+    // 所有Monster子类的默认属性
+    protected Monster(double zoom) {
+
+        location = new Point();
+        moveCtrl = new MonsterMoveCtrl(this);
+        sSize = new Dimension((int) (GameSettings.BLOCK_SIZE), (int) (GameSettings.BLOCK_SIZE));
+        currentAction = "walk_down";
+        collisionBox = new CollisionBox();
+        this.zoom = zoom;
+        alive = true;
+    }
+
+    public void initLocation(Graphics g) {
+        location = GameMap.getInstance().randomLocation(g,this);
+        collisionBox.boxMove(location);
+    }
 //    Point mapOffset = GameMap.getInstance().getOffset();
 //    public void draw(Graphics g) {
 //        Action action = actions.get(currentAction);

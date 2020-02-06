@@ -6,10 +6,11 @@
 
 package me.archcst.agameproject.util;
 
-import java.awt.*;
-import java.util.Objects;
+import me.archcst.agameproject.map.MapBlock;
 
-public class CollisionBox {
+import java.awt.*;
+
+public class CollisionBox implements Cloneable {
     public int x1;
     public int y1;
     public int x2;
@@ -62,15 +63,20 @@ public class CollisionBox {
         this.x2 = collisionBox.x2 + offset.x;
         this.y1 = collisionBox.y1 + offset.y;
         this.y2 = collisionBox.y2 + offset.y;
-        this.width = collisionBox.x2 - collisionBox.x1;
-        this.height = collisionBox.y2 - collisionBox.y1;
+        this.width = Math.abs(collisionBox.x2 - collisionBox.x1);
+        this.height = Math.abs(collisionBox.y2 - collisionBox.y1);
     }
 
-    public void boxMove(Point offset) {
+    public synchronized void boxMove(Point offset) {
         x1 += offset.x;
         x2 += offset.x;
         y1 += offset.y;
         y2 += offset.y;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override

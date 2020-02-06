@@ -6,10 +6,13 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.avatar.Avatar;
+import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
+import org.omg.CORBA.ContextList;
 
 import java.awt.*;
 
@@ -26,45 +29,119 @@ public abstract class MoveCtrl {
 
     /**
      * 确认和地图的碰撞箱不冲突，然后按照 urdl 设置的方向移动
-     * @param g 测试用画笔
      */
     protected void validateAndMove(Graphics g) {
         GameMap gameMap = GameMap.getInstance();
         CollisionBox tempCB;
-        Point displacement = new Point();
+        Point displacement = new Point(0 , 0);
 
-        setAvatarRefreshRate();
+            setAvatarRefreshRate();
+
         if (up() && !down()) { // 上
             displacement.y = -avatar.walkSpeed;
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
+            if (gameMap.mapCollision(g, tempCB)) {
                 displacement.y = 0;
             }
         }
         if (right() && !left()) { // 右
             displacement.x = avatar.walkSpeed;
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
+            if (gameMap.mapCollision(g, tempCB)) {
                 displacement.x = 0;
             }
         }
         if (down() && !up()) { // 下
             displacement.y = avatar.walkSpeed;
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
+            if (gameMap.mapCollision(g, tempCB)) {
                 displacement.y = 0;
             }
         }
         if (left() && !right()) { // 左
             displacement.x = -avatar.walkSpeed;
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
-            if (gameMap.validateCollision(g, tempCB)) {
+            if (gameMap.mapCollision(g, tempCB)) {
                 displacement.x = 0;
             }
         }
 
         avatar.avatarMove(displacement);
     }
+
+    private void testCode(Graphics g, Point displacement) {
+        System.out.print(up() + " ");
+        System.out.print(right() + " ");
+        System.out.print(down() + " ");
+        System.out.print(left() + " ");
+        String frame = " 帧: " + Framer.getInstance().getFrame();
+        System.out.println(displacement+" " + frame);
+        g.drawString(frame,Camera.getInstance().cameraedX(avatar.location.x), Camera.getInstance().cameraedY(avatar.location.y));
+    }
+
+    /**
+     * 确认和地图的碰撞箱不冲突，然后按照 urdl 设置的方向移动
+     */
+//    protected void validateAndMove(Graphics g) {
+//        GameMap gameMap = GameMap.getInstance();
+//        CollisionBox tempCB;
+//        Point displacement = new Point(0 , 0);
+//
+//        if (up() && !down()) { // 上
+//            tempCB = new CollisionBox(avatar.getCollisionBox(), new Point(0, -avatar.getWalkSpeed()));
+//            if (!gameMap.mapCollision(g, tempCB)) {
+//                displacement.y = -avatar.getWalkSpeed();
+//                System.out.print(up());
+//                System.out.print(right());
+//                System.out.print(down());
+//                System.out.print(left());
+//                String frame = Framer.getInstance().getFrame() + "";
+//                System.out.println(" up"+displacement+" " + frame);
+//                g.drawString(frame, Camera.getInstance().cameraedX(avatar.location.x), Camera.getInstance().cameraedY(avatar.location.y));
+//            }
+//        }
+//        if (right() && !left()) { // 右
+//            tempCB = new CollisionBox(avatar.getCollisionBox(), new Point(avatar.getWalkSpeed(), 0));
+//            if (!gameMap.mapCollision(g, tempCB)) {
+//                displacement.x = avatar.walkSpeed;
+//                System.out.print(up());
+//                System.out.print(right());
+//                System.out.print(down());
+//                System.out.print(left());
+//                String frame = Framer.getInstance().getFrame() + "";
+//                System.out.println(" right"+displacement+" " + frame);
+//                g.drawString(frame,Camera.getInstance().cameraedX(avatar.location.x), Camera.getInstance().cameraedY(avatar.location.y));
+//            }
+//        }
+//        if (down() && !up()) { // 下
+//            tempCB = new CollisionBox(avatar.getCollisionBox(), new Point(0, avatar.getWalkSpeed()));
+//            if (!gameMap.mapCollision(g, tempCB)) {
+//                displacement.y = avatar.walkSpeed;
+//                System.out.print(up());
+//                System.out.print(right());
+//                System.out.print(down());
+//                System.out.print(left());
+//                String frame = Framer.getInstance().getFrame() + "";
+//                System.out.println(" down"+displacement+" " + frame);
+//                g.drawString(frame,Camera.getInstance().cameraedX(avatar.location.x), Camera.getInstance().cameraedY(avatar.location.y));
+//            }
+//        }
+//        if (left() && !right()) { // 左
+//            tempCB = new CollisionBox(avatar.getCollisionBox(), new Point(-avatar.getWalkSpeed(), 0));
+//            if (!gameMap.mapCollision(g, tempCB)) {
+//                displacement.x = -avatar.getWalkSpeed();
+//                System.out.print(up());
+//                System.out.print(right());
+//                System.out.print(down());
+//                System.out.print(left());
+//                String frame = Framer.getInstance().getFrame() + "";
+//                System.out.println(" left"+displacement+" " + frame);
+//                g.drawString(frame,Camera.getInstance().cameraedX(avatar.location.x), Camera.getInstance().cameraedY(avatar.location.y));
+//            }
+//        }
+//
+//        avatar.avatarMove(displacement);
+//    }
 
     /**
      * 根据传入字符串设置人物方向

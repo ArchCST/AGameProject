@@ -8,13 +8,10 @@ package me.archcst.agameproject.ui;
 
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.Framer;
-import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.GameSettings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements Runnable{
     private static GamePanel gamePanel;
@@ -44,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void run() {
         while (true) {
             try {
-                Thread.sleep(8);
+                Thread.sleep(GameSettings.GAME_SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -56,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        DataCenter dataCenter = DataCenter.getInstance();
+        DataCenter dataCenter = DataCenter.getInstance(g);
         dataCenter.drawFrame(g);
         dataCenter.gameProcess(g);
 

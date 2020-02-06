@@ -6,9 +6,7 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -31,10 +29,10 @@ public class Player extends Avatar {
 
     private Player() {
         zoom = 1;
-        dimension = new Dimension(48, 48);
+        sSize = new Dimension(48, 48);
         currentAction = "walk_down";
         walkSpeed = 2;
-        refreshRate = 16;
+        refreshRate = GameSettings.AVATAR_REFRESH_RATE;
         alive = true;
         moveCtrl = new PlayerMoveCtrl(this);
 
@@ -47,13 +45,9 @@ public class Player extends Avatar {
         location = new Point(
                 (GameMap.getInstance().getMapSize().width / 2) * GameMap.BLOCK_SIZE,
                 (GameMap.getInstance().getMapSize().height / 2) * GameMap.BLOCK_SIZE);
-        // 坐标（屏幕正中）
-//        location = new Point((GameSettings.GAME_WIDTH - dimension.width) /2,
-//                (GameSettings.GAME_HEIGHT - dimension.height) / 2);
 
         // 碰撞箱
         collisionBox = new CollisionBox(location.x + 13, location.y + 36,
-                location.x + dimension.width - 14, location.y + dimension.height);
-
+                location.x + sSize.width - 14, location.y + sSize.height);
     }
 }

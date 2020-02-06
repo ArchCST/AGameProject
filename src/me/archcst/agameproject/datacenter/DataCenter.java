@@ -6,9 +6,7 @@
 
 package me.archcst.agameproject.datacenter;
 
-import me.archcst.agameproject.avatar.Monster;
-import me.archcst.agameproject.avatar.Monster_Slime;
-import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.avatar.*;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
 
@@ -21,21 +19,28 @@ public class DataCenter {
     private Player player;
     private ArrayList<Monster> monsters;
 
-    public static DataCenter getInstance() {
+    public static DataCenter getInstance(Graphics g) {
         if (dataCenter == null) {
-            dataCenter = new DataCenter();
+            dataCenter = new DataCenter(g);
         }
         return dataCenter;
     }
 
-    private DataCenter() {
+    private DataCenter(Graphics g) {
         gameMap = GameMap.getInstance();
         player = Player.getInstance();
         monsters = new ArrayList<>();
-        monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
-        monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
-        monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
-        monsters.add(new Monster_Slime(gameMap.randomEmptyBlock()));
+
+        for (int i = 0; i < 3; i++) {
+            monsters.add(new Monster_Slime(1, 1));
+            monsters.add(new Monster_Devil(1, 2));
+            monsters.add(new Monster_Dragon(1, 3));
+            monsters.add(new Monster_Orc(1, 2));
+        }
+
+        for (Monster m: monsters) {
+            m.initLocation(g);
+        }
     }
 
     public void drawFrame(Graphics g) {

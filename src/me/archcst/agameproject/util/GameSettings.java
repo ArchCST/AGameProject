@@ -6,11 +6,15 @@
 
 package me.archcst.agameproject.util;
 
+import java.util.Random;
+
 public class GameSettings {
+    public static Random r = new Random(3);
+    public static final long GAME_SLEEP_TIME = 8; // 8
     public static final boolean DEV_MODE = true; // 开发模式开关
     public static final boolean DEV_SHOW_MAP_BLOCKS = false; // 画出所有地图块矩形
-    public static final boolean DEV_SHOW_AVATAR_COLLISION_BOX = true; // 画出所有角色的碰撞箱
-    public static final boolean DEV_SHOW_MAP_COLLISION_BOX = true; // 画出地图的碰撞箱
+    public static final boolean DEV_SHOW_AVATAR_COLLISION_BOX = false; // 画出所有角色的碰撞箱
+    public static final boolean DEV_SHOW_MAP_COLLISION_BOX = false; // 画出地图的碰撞箱
     public static final boolean DEV_SHOW_CONFLICT_COLLISION_BOX = true; // 画出发生碰撞的碰撞箱
     public static final boolean DEV_SHOW_TEMP_COLLISION_BOX = true; // 画出发生位移前用来预判的碰撞箱
     public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = true; // 画出Panel的中心点
@@ -27,6 +31,11 @@ public class GameSettings {
     public static final int CHANCE_OF_OBSTACLE_4 = 1000; // 4格障碍物的出现概率
 
     public static final int AVATAR_REFRESH_RATE = 16; // 角色动画刷新频率
+    public static final double MONSTER_IDLE_CHANCE = 0.3; // 怪物停止移动的几率
+    public static final double MONSTER_ATTACK_CHANCE = 0.5; // 怪物攻击机率
+
+    public static final long MONSTER_MIN_MOVE_TIME = 500;
+    public static final long MONSTER_MAX_MOVE_TIME = 1000;
 
 //    private static GameSettings gameSettings = null;
 //    private GameSettings() {}

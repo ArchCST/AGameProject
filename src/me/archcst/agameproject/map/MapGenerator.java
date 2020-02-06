@@ -28,11 +28,7 @@ public class MapGenerator {
     private static final int maxHeight = 21;
 
     public MapGenerator() {
-        r = new Random();
-    }
-
-    public MapGenerator(long seed) {
-        r = new Random(seed);
+        r = GameSettings.r;
     }
 
     public MapBlock[][] generateMap() {

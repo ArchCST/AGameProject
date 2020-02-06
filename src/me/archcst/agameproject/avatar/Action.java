@@ -6,9 +6,6 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.ui.GamePanel;
-import me.archcst.agameproject.util.GameSettings;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -46,10 +43,10 @@ public class Action {
                 animationArray[i] = animationArray[1];
                 break;
             }
-            animationArray[i][0] = point.x + avatar.getDimension().width * i;
+            animationArray[i][0] = point.x + avatar.getsSize().width * i;
             animationArray[i][1] = point.y;
-            animationArray[i][2] = point.x + avatar.getDimension().width * (i + 1);
-            animationArray[i][3] = point.y + avatar.getDimension().height;
+            animationArray[i][2] = point.x + avatar.getsSize().width * (i + 1);
+            animationArray[i][3] = point.y + avatar.getsSize().height;
         }
     }
 

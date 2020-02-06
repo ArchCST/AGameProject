@@ -13,6 +13,7 @@ import me.archcst.agameproject.util.GameSettings;
 import java.awt.*;
 
 public class PlayerMoveCtrl extends MoveCtrl {
+
     public PlayerMoveCtrl(Avatar avatar) {
         super(avatar);
     }
@@ -21,8 +22,7 @@ public class PlayerMoveCtrl extends MoveCtrl {
     public void move(Graphics g) {
         validateAndMove(g);
 
-        Camera camera = Camera.getInstance();
-
+        // 设置信标
         Point beacon = new Point();
         if (up() || right() || down() || left()) {
             if (up()) beacon.y = -GameSettings.BEACON_DISPLACEMENT;
@@ -34,7 +34,7 @@ public class PlayerMoveCtrl extends MoveCtrl {
         beacon.x += avatar.location.x;
         beacon.y += avatar.location.y;
 
+        Camera camera = Camera.getInstance();
         camera.setBeacon(beacon);
-
     }
 }

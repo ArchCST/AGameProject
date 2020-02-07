@@ -7,6 +7,7 @@
 package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.datacenter.Framer;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -18,9 +19,9 @@ public abstract class Avatar {
     public final HashMap<String, Action> actions = new HashMap<>(); //角色所有动作的集合
     protected String currentAction; // 当前动作
 
-    protected Point location; // 角色的坐标
+    protected Location location; // 角色的坐标
     protected Dimension offset; // 字体Y轴修正
-    protected int walkSpeed; // 移动速度
+    protected double walkSpeed; // 移动速度
     protected int refreshRate; // 动画刷新率
     protected Dimension size; // 原始大小
     protected double zoom; // 角色放大系数
@@ -48,28 +49,27 @@ public abstract class Avatar {
 
         // 清空绘画区域的地图
         g.setColor(GameSettings.BACKGROUND_COLOR);
-        g.fillRect(camera.packX(location.x), camera.packY(location.y),
+        g.fillRect(camera.packX(location.intX()), camera.packY(location.intY()),
                 size.width, size.height);
 
         for (int i = 0; i < animateByFrame.length; i++) {
             g.setColor(action.getColor());
             g.drawString(animateByFrame[i],
-                    camera.packX(location.x + offset.width),
-                    camera.packY(location.y + i * GameSettings.FONT_SIZE + offset.height));
+                    camera.packX(location.intX() + offset.width),
+                    camera.packY(location.intY() + i * GameSettings.FONT_SIZE + offset.height));
         }
 
         // 开发模式画出角色外框
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_BOX) {
             g.setColor(Color.BLUE);
-            g.drawRect(camera.packX(location.x), camera.packY(location.y),
+            g.drawRect(camera.packX(location.intX()), camera.packY(location.intY()),
                     size.width, size.height);
         }
 
         // 开发模式画出碰撞箱
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
             g.setColor(Color.GREEN);
-            g.drawRect(camera.packX(collisionBox.x1), camera.packY(collisionBox.y1),
-                    collisionBox.width, collisionBox.height);
+            collisionBox.draw(g);
         }
 
     }
@@ -80,11 +80,22 @@ public abstract class Avatar {
     /**
      * 移动角色
      *
-     * @param offset 偏移量
      */
-    public void avatarMove(Point offset) {
-        location.x += offset.x;
-        location.y += offset.y;
+    public void avatarMove(double x, double y) {
+        location.moveX(x);
+        location.moveY(y);
+        // 也要移动碰撞箱
+        collisionBox.boxMove(x, y);
+    }
+
+
+    /**
+     * 移动角色
+     *
+     */
+    public void avatarMove(Location offset) {
+        location.moveX(offset.x());
+        location.moveY(offset.y());
         // 也要移动碰撞箱
         collisionBox.boxMove(offset);
     }
@@ -105,16 +116,16 @@ public abstract class Avatar {
      * @param downPercent   下移百分比
      */
     public void setCollisionBox(double widthPercent, double heightPercent, double rightPercent, double downPercent) {
-        int width = (int) (size.width * zoom * widthPercent);
-        int height = (int) (size.height * zoom * heightPercent);
-        int x1 = location.x + (int) (size.width * zoom - width) / 2;
-        int y1 = location.y + (int) (size.height * zoom - height) / 2;
+        double width = size.width * zoom * widthPercent;
+        double height = size.height * zoom * heightPercent;
+        double x1 = location.x() + (size.width * zoom - width) / 2;
+        double y1 = location.y() + (size.height * zoom - height) / 2;
         collisionBox.setCollisionBox(x1, y1, x1 + width, y1 + height);
 
         // 距离图片中心的偏移量
-        Point offset = new Point();
-        offset.x = (int) (size.width * zoom * rightPercent);
-        offset.y = (int) (size.height * zoom * downPercent);
+        Location offset = new Location();
+        offset.setX(size.width * zoom * rightPercent);
+        offset.setY(size.height * zoom * downPercent);
         collisionBox.boxMove(offset);
     }
 
@@ -142,30 +153,12 @@ public abstract class Avatar {
         this.refreshRate = refreshRate;
     }
 
-    public int getWalkSpeed() {
-        return walkSpeed;
-    }
-
-    public void setWalkSpeed(int walkSpeed) {
-        this.walkSpeed = walkSpeed;
-    }
-
-    public Point getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Point location) {
+    public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public void setLocation(int x, int y) {
-        Point offset = new Point();
-        offset.x = x - location.x;
-        offset.y = y - location.y;
-
-        location.x = x;
-        location.y = y;
-        collisionBox.boxMove(offset);
     }
 
     public void setCurrentAction(String currentAction) {

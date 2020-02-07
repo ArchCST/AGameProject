@@ -9,6 +9,7 @@ package me.archcst.agameproject.avatar.obstacles;
 import me.archcst.agameproject.avatar.Action;
 import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -18,7 +19,7 @@ public abstract class Obstacle extends Avatar {
 
     public Obstacle() {
         zoom = 1;
-        this.location = new Point();
+        this.location = new Location();
         alive = true;
         size = new Dimension();
         currentAction = "idle";

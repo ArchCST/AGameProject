@@ -11,6 +11,7 @@ import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.avatar.monsters.Monster;
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.map.Location;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 public class Target {
     private static Target target = null;
     private static Monster targetMonster;
-    Point targetPoint;
+    Location targetPoint;
 
     private Target() {
-        targetPoint = new Point();
+        targetPoint = new Location();
         if (DataCenter.getInstance().getMonsters().size() > 0) {
             refreshTarget();
         }
@@ -56,19 +57,9 @@ public class Target {
             }
 
         }
-//        ArrayList<Monster> monsters = DataCenter.getInstance().getMonsters();
-//        if (targetMonster == null) {
-//            Random r = GameSettings.r; // 无任何怪物视野时随机放置准星
-//            targetMonster = monsters.get(r.nextInt(monsters.size()));
-//        }
-//        for (Monster m : monsters) {
-//            if (ifInsight(m) && distanceToPlayer(m) <= distanceToPlayer(targetMonster)) {
-//                targetMonster = m;
-//            }
-//        }
 
-        targetPoint.x = targetMonster.getLocation().x + targetMonster.getSize().width / 2;
-        targetPoint.y = targetMonster.getLocation().y + targetMonster.getSize().height / 2;
+        targetPoint.setX(targetMonster.getLocation().x() + targetMonster.getSize().width / 2);
+        targetPoint.setY(targetMonster.getLocation().y() + targetMonster.getSize().height / 2);
     }
 
     /**
@@ -79,10 +70,10 @@ public class Target {
      */
     private double distanceToPlayer(Avatar target) {
         Player player = Player.getInstance();
-        int px = player.getLocation().x + player.getSize().width / 2;
-        int py = player.getLocation().y + player.getSize().height / 2;
-        int tx = target.getLocation().x + target.getSize().width / 2;
-        int ty = target.getLocation().y + target.getSize().height / 2;
+        double px = player.getLocation().x() + player.getSize().width / 2;
+        double py = player.getLocation().y() + player.getSize().height / 2;
+        double tx = target.getLocation().x() + target.getSize().width / 2;
+        double ty = target.getLocation().y() + target.getSize().height / 2;
 
         return Math.sqrt((px - tx) * (px - tx) + (py - ty) * (py - ty));
     }
@@ -90,10 +81,10 @@ public class Target {
     // 判断怪物在不在视野中
     private boolean Insight(Avatar avatar) {
         Player player = Player.getInstance();
-        int px = player.getLocation().x + player.getSize().width / 2;
-        int py = player.getLocation().y + player.getSize().height / 2;
-        int tx = avatar.getLocation().x + avatar.getSize().width / 2;
-        int ty = avatar.getLocation().y + avatar.getSize().height / 2;
+        double px = player.getLocation().x() + player.getSize().width / 2;
+        double py = player.getLocation().y() + player.getSize().height / 2;
+        double tx = avatar.getLocation().x() + avatar.getSize().width / 2;
+        double ty = avatar.getLocation().y() + avatar.getSize().height / 2;
         ArrayList<CollisionBox> mc = GameMap.getInstance().getAllMapCollisionBox();
         for (CollisionBox cb : mc) {
             if (cb.coverLine(px, py, tx, ty)) {
@@ -106,10 +97,10 @@ public class Target {
     // 画准星
     public void draw(Graphics g) {
         Camera camera = Camera.getInstance();
-        int drawX = targetPoint.x - GameSettings.FONT_SIZE / 2 - GameSettings.FONT_SIZE;
-        int drawY1 = targetPoint.y - GameSettings.FONT_SIZE / 2;
-        int drawY2 = targetPoint.y - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE;
-        int drawY3 = targetPoint.y - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE * 2;
+        double drawX = targetPoint.x() - GameSettings.FONT_SIZE / 2 - GameSettings.FONT_SIZE;
+        double drawY1 = targetPoint.y() - GameSettings.FONT_SIZE / 2;
+        double drawY2 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE;
+        double drawY3 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE * 2;
         g.setColor(Color.RED);
         g.drawString("┏┳┓", camera.packX(drawX), camera.packY(drawY1));
         g.drawString("┣　┫", camera.packX(drawX), camera.packY(drawY2));

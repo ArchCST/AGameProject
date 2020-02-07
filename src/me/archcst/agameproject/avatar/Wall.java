@@ -6,6 +6,7 @@
 
 package me.archcst.agameproject.avatar;
 
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -14,7 +15,7 @@ import java.awt.*;
 public class Wall extends Avatar {
 
     public Wall(int zoom, int x, int y) {
-        this.location = new Point(x, y);
+        this.location = new Location(x, y);
         size = new Dimension(GameSettings.BLOCK_SIZE,GameSettings.BLOCK_SIZE);
         currentAction = "idle";
         collisionBox = new CollisionBox();

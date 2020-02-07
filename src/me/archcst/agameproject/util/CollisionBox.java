@@ -6,17 +6,18 @@
 
 package me.archcst.agameproject.util;
 
+import me.archcst.agameproject.map.Location;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.util.StringJoiner;
 
 public class CollisionBox implements Cloneable {
-    public int x1;
-    public int y1;
-    public int x2;
-    public int y2;
-    public int width;
-    public int height;
+    public double x1;
+    public double y1;
+    public double x2;
+    public double y2;
+    public double width;
+    public double height;
 
     /**
      * @param x1 左上x
@@ -24,7 +25,7 @@ public class CollisionBox implements Cloneable {
      * @param x2 右下x
      * @param y2 右下y
      */
-    public CollisionBox(int x1, int y1, int x2, int y2) {
+    public CollisionBox(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -33,7 +34,7 @@ public class CollisionBox implements Cloneable {
         height = y2 - y1;
     }
 
-    public void setCollisionBox(int x1, int y1, int x2, int y2) {
+    public void setCollisionBox(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -49,29 +50,26 @@ public class CollisionBox implements Cloneable {
     }
 
 
-    public CollisionBox(CollisionBox collisionBox, Dimension offset) {
-        this.x1 = collisionBox.x1 + offset.width;
-        this.x2 = collisionBox.x2 + offset.width;
-        this.y1 = collisionBox.y1 + offset.height;
-        this.y2 = collisionBox.y2 + offset.height;
-        this.width = collisionBox.x2 - collisionBox.x1;
-        this.height = collisionBox.y2 - collisionBox.y1;
+    public CollisionBox(CollisionBox collisionBox, Location offset) {
+        x1 = collisionBox.x1 + offset.x();
+        y1 = collisionBox.y1 + offset.y();
+        x2 = collisionBox.x2 + offset.x();
+        y2 = collisionBox.y2 + offset.y();
+        width = (int) (x2 - x1);
+        height = (int) (y2 - y1);
     }
 
-    public CollisionBox(CollisionBox collisionBox, Point offset) {
-        this.x1 = collisionBox.x1 + offset.x;
-        this.x2 = collisionBox.x2 + offset.x;
-        this.y1 = collisionBox.y1 + offset.y;
-        this.y2 = collisionBox.y2 + offset.y;
-        this.width = Math.abs(collisionBox.x2 - collisionBox.x1);
-        this.height = Math.abs(collisionBox.y2 - collisionBox.y1);
+
+    public synchronized void boxMove(Location offset) {
+        boxMove(offset.x(), offset.y());
     }
 
-    public synchronized void boxMove(Point offset) {
-        x1 += offset.x;
-        x2 += offset.x;
-        y1 += offset.y;
-        y2 += offset.y;
+
+    public synchronized void boxMove(double x, double y) {
+        x1 += x;
+        y1 += y;
+        x2 += x;
+        y2 += y;
     }
 
     @Override
@@ -80,7 +78,7 @@ public class CollisionBox implements Cloneable {
     }
 
     // 是否覆盖某一线段，用于视野判断
-    public boolean coverLine(int x1, int y1, int x2, int y2) {
+    public boolean coverLine(double x1, double y1, double x2, double y2) {
         boolean up = Line2D.linesIntersect(x1, y1, x2, y2,
                 this.x1, this.y1, this.x2, this.y1);
 
@@ -96,14 +94,37 @@ public class CollisionBox implements Cloneable {
         return up || right || down || left;
     }
 
+    // 碰撞
+    public boolean crash(CollisionBox cb) {
+        double tw = this.width;
+        double th = this.height;
+        double cbw = cb.width;
+        double cbh = cb.height;
+        if (cbw <= 0 || cbh <= 0 || tw <= 0 || th <= 0) {
+            return false;
+        }
+        double tx = this.x1;
+        double ty = this.y1;
+        double rx = cb.x1;
+        double ry = cb.y1;
+        cbw += rx;
+        cbh += ry;
+        tw += tx;
+        th += ty;
+        //      overflow || intersect
+        return ((cbw < rx || cbw > tx) &&
+                (cbh < ry || cbh > ty) &&
+                (tw < tx || tw > rx) &&
+                (th < ty || th > ry));
+    }
+
     @Override
     public boolean equals(Object object) {
         boolean b = false;
         if (object instanceof CollisionBox) {
             CollisionBox box = (CollisionBox) object;
-            Rectangle thisRect = new Rectangle(x1, y1, width, height);
-            Rectangle objectRect = new Rectangle(box.x1, box.y1, box.width, box.height);
-            b = thisRect.intersects(objectRect);
+            b = this.crash(box);
+//            b = thisRect.intersects(objectRect);
             // object 在外层
 //            if (this.x1 >= box.x1 && this.x1 <= box.x2) {
 //                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
@@ -146,6 +167,7 @@ public class CollisionBox implements Cloneable {
     public void draw(Graphics g) {
         Camera camera = Camera.getInstance();
         g.setColor(Color.YELLOW);
-        g.drawRect(camera.packX(x1), camera.packY(y1), width, height);
+        g.drawRect(camera.packX(x1), camera.packY(y1), (int)width, (int)height);
     }
+
 }

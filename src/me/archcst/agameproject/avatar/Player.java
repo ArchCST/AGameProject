@@ -7,6 +7,7 @@
 package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
@@ -34,7 +35,7 @@ public class Player extends Avatar {
         moveCtrl = new PlayerMoveCtrl(this);
 
         loadAction();
-        location = new Point(
+        location = new Location(
                 (GameMap.getInstance().getMapSize().width / 2) * GameSettings.BLOCK_SIZE + 10,
                 (GameMap.getInstance().getMapSize().height / 2) * GameSettings.BLOCK_SIZE);
         offset.width = 0;

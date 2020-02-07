@@ -8,6 +8,7 @@ package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -31,50 +32,48 @@ public abstract class MoveCtrl {
     protected void validateAndMove(Graphics g) {
         GameMap gameMap = GameMap.getInstance();
         CollisionBox tempCB;
-        Point displacement = new Point(0, 0);
+        Location displacement = new Location(0, 0);
 
         setAvatarRefreshRate();
 
         if (up() && !down()) { // 上
-            displacement.y = -avatar.walkSpeed;
+            displacement.setY(-avatar.walkSpeed);
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
-                displacement.y = 0;
+                displacement.setY(0);
             }
         }
         if (right() && !left()) { // 右
-            displacement.x = avatar.walkSpeed;
+            displacement.setX(avatar.walkSpeed);
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
-                displacement.x = 0;
+                displacement.setX(0);
             }
         }
         if (down() && !up()) { // 下
-            displacement.y = avatar.walkSpeed;
+            displacement.setY(avatar.walkSpeed);
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
-                displacement.y = 0;
+                displacement.setY(0);
             }
         }
         if (left() && !right()) { // 左
-            displacement.x = -avatar.walkSpeed;
+            displacement.setX(-avatar.walkSpeed);
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
-                displacement.x = 0;
+                displacement.setX(0);
             }
         }
 
         avatar.avatarMove(displacement);
     }
 
-    private void testCode(Graphics g, Point displacement) {
-        System.out.print(up() + " ");
-        System.out.print(right() + " ");
-        System.out.print(down() + " ");
-        System.out.print(left() + " ");
-        String frame = " 帧: " + Framer.getInstance().getFrame();
-        System.out.println(displacement + " " + frame);
-        g.drawString(frame, Camera.getInstance().packX(avatar.location.x), Camera.getInstance().packY(avatar.location.y));
+    // 返回x轴或者y轴的位移值，根据勾股定律计算
+    private double moveDistance() {
+        for (int i = 0; i < urdl.length; i++) {
+
+        }
+        return Math.sqrt(avatar.walkSpeed / 2);
     }
 
     /**
@@ -134,6 +133,12 @@ public abstract class MoveCtrl {
         }
     }
 
+    public void readKey(String key) {
+        switch (key) {
+            case "up" :
+                
+        }
+    }
     private void setAvatarRefreshRate() {
         if (up() || right() || down() || left()) {
             avatar.setRefreshRate(GameSettings.AVATAR_REFRESH_RATE);

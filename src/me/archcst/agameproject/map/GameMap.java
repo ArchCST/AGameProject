@@ -123,9 +123,9 @@ public class GameMap {
         int amount = (int) (GameSettings.OBSTACLE_RATE * mapSize.width * mapSize.height);
         for (int i = 0; i < amount; i++) {
             Obstacle obstacle = ObstacleFactory.createObstacle(r.nextInt(ObstacleFactory.OBSTACLE_TYPE_AMOUNT));
-            Point mPoint = randomLocation(obstacle.getCollisionBox());
-            obstacle.setLocation(mPoint);
-            obstacle.getCollisionBox().boxMove(mPoint);
+            Location location = randomLocation(obstacle.getCollisionBox());
+            obstacle.setLocation(location);
+            obstacle.getCollisionBox().boxMove(location);
 
             obstacles.add(obstacle);
         }
@@ -137,17 +137,17 @@ public class GameMap {
      * @param cb 传入的碰撞箱
      * @return 合适的坐标
      */
-    public Point randomLocation(CollisionBox cb) {
-        Point point = new Point(); // 返回值
+    public Location randomLocation(CollisionBox cb) {
+        Location location = new Location(); // 返回值
         Random r = GameSettings.r;
         CollisionBox tempCB = null;
         do {
-            point.x = r.nextInt(mapSize.width * GameSettings.BLOCK_SIZE);
-            point.y = r.nextInt(mapSize.height * GameSettings.BLOCK_SIZE);
-            tempCB = new CollisionBox(cb, point);
+            location.setX(r.nextInt(mapSize.width * GameSettings.BLOCK_SIZE));
+            location.setY(r.nextInt(mapSize.height * GameSettings.BLOCK_SIZE));
+            tempCB = new CollisionBox(cb, location);
         } while (mapCollision(tempCB) || tempCB.equals(safeArea));
 
-        return point;
+        return location;
     }
 
     /**
@@ -161,7 +161,7 @@ public class GameMap {
             Camera camera = Camera.getInstance();
             g.setColor(Color.WHITE);
             g.drawRect(camera.packX(cb.x1), camera.packY(cb.y1),
-                    cb.width, cb.height);
+                    (int)cb.width, (int)cb.height);
         }
 
         boolean b = false;
@@ -172,10 +172,10 @@ public class GameMap {
                     Camera camera = Camera.getInstance();
                     g.setColor(Color.RED);
                     g.drawRect(camera.packX(mc.x1), camera.packY(mc.y1),
-                            mc.width, mc.height);
+                            (int)mc.width, (int)mc.height);
 
                     g.drawRect(camera.packX(cb.x1), camera.packY(cb.y1),
-                            cb.width, cb.height);
+                            (int)cb.width, (int)cb.height);
                 }
                 b = true;
             }

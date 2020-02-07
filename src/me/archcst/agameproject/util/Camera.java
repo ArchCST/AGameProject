@@ -7,18 +7,17 @@
 package me.archcst.agameproject.util;
 
 import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.ui.GamePanel;
-
-import java.awt.*;
 
 public class Camera {
     private static Camera camera = null;
 
     private Camera() {
 //        cameraThread = new Thread(this);
-        beacon = new Point(Player.getInstance().getLocation().x - 12,
-                Player.getInstance().getLocation().y);
-        cPoint = new Point(beacon);
+        beacon = new Location(Player.getInstance().getLocation().x() - 12,
+                Player.getInstance().getLocation().y());
+        location = new Location(beacon);
 //        cameraThread.start();
     }
 
@@ -33,26 +32,22 @@ public class Camera {
         return camera;
     }
 
-    private Point cPoint; // 相机的指向
-    private Point beacon; // 信标的坐标
+    private Location location; // 相机的指向
+    private Location beacon; // 信标的坐标
 
-    public int packX(int x) {
+    public int packX(double x) {
         int panelCenterX = GamePanel.getInstance().getWidth() / 2;
-        return panelCenterX - cPoint.x + x - GameSettings.BLOCK_SIZE / 2;
+        return panelCenterX - (int) (location.x() - x) - GameSettings.BLOCK_SIZE / 2;
     }
 
-    public int packY(int y) {
+    public int packY(double y) {
         int panelCenterY = GamePanel.getInstance().getHeight() / 2;
-        return panelCenterY - cPoint.y + y - GameSettings.BLOCK_SIZE / 2;
+        return panelCenterY - (int) (location.y() - y) - GameSettings.BLOCK_SIZE / 2;
     }
 
-    public Point cameraedPoint(Point point) {
-        return new Point(packX(point.x), packY(point.y));
-    }
-
-    public void setBeacon(Point point) {
-        beacon.x = point.x;
-        beacon.y = point.y;
+    public void setBeacon(Location location) {
+        beacon.setX(location.x());
+        beacon.setY(location.y());
     }
 
 //    @Override
@@ -68,36 +63,36 @@ public class Camera {
 //    }
 
     public void updateCamera() {
-        if (cPoint.x != beacon.x) {
-            if (beacon.x > cPoint.x) {
-                if (beacon.x >= cPoint.x  + GameSettings.CAMERA_SPEED) {
-                    cPoint.x += GameSettings.CAMERA_SPEED;
+        if (location.x() != beacon.x()) {
+            if (beacon.x() > location.x()) {
+                if (beacon.x() >= location.x()  + GameSettings.CAMERA_SPEED) {
+                    location.moveX(GameSettings.CAMERA_SPEED);
                 } else {
-                    cPoint.x = beacon.x;
+                    location.setX(beacon.x());
                 }
             }
-            if (beacon.x < cPoint.x) {
-                if (beacon.x <= cPoint.x - GameSettings.CAMERA_SPEED) {
-                    cPoint.x -= GameSettings.CAMERA_SPEED;
+            if (beacon.x() < location.x()) {
+                if (beacon.x() <= location.x() - GameSettings.CAMERA_SPEED) {
+                    location.moveX(-GameSettings.CAMERA_SPEED);
                 } else {
-                    cPoint.x = beacon.x;
+                    location.setX(beacon.x());
                 }
             }
         }
 
-        if (cPoint.y != beacon.y) {
-            if (beacon.y > cPoint.y) {
-                if (beacon.y >= cPoint.y  + GameSettings.CAMERA_SPEED) {
-                    cPoint.y += GameSettings.CAMERA_SPEED;
+        if (location.y() != beacon.y()) {
+            if (beacon.y() > location.y()) {
+                if (beacon.y() >= location.y()  + GameSettings.CAMERA_SPEED) {
+                    location.moveY(GameSettings.CAMERA_SPEED);
                 } else {
-                    cPoint.y = beacon.y;
+                    location.setY(beacon.y());
                 }
             }
-            if (beacon.y < cPoint.y) {
-                if (beacon.y <= cPoint.y - GameSettings.CAMERA_SPEED) {
-                    cPoint.y -= GameSettings.CAMERA_SPEED;
+            if (beacon.y() < location.y()) {
+                if (beacon.y() <= location.y() - GameSettings.CAMERA_SPEED) {
+                    location.moveY(-GameSettings.CAMERA_SPEED);
                 } else {
-                    cPoint.y = beacon.y;
+                    location.setY(beacon.y());
                 }
             }
         }

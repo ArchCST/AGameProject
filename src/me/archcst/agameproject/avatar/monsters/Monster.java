@@ -9,6 +9,7 @@ package me.archcst.agameproject.avatar.monsters;
 import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.MonsterMoveCtrl;
 import me.archcst.agameproject.map.GameMap;
+import me.archcst.agameproject.map.Location;
 import me.archcst.agameproject.util.CollisionBox;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ public abstract class Monster extends Avatar {
     // 所有Monster子类的默认属性
     protected Monster(double zoom) {
 
-        location = new Point();
+        location = new Location();
         moveCtrl = new MonsterMoveCtrl(this);
         size = new Dimension();
         collisionBox = new CollisionBox();

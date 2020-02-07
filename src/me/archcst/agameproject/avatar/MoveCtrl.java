@@ -37,28 +37,28 @@ public abstract class MoveCtrl {
         setAvatarRefreshRate();
 
         if (up() && !down()) { // 上
-            displacement.setY(-avatar.walkSpeed);
+            displacement.setY(-moveDistance());
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
                 displacement.setY(0);
             }
         }
         if (right() && !left()) { // 右
-            displacement.setX(avatar.walkSpeed);
+            displacement.setX(moveDistance());
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
                 displacement.setX(0);
             }
         }
         if (down() && !up()) { // 下
-            displacement.setY(avatar.walkSpeed);
+            displacement.setY(moveDistance());
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
                 displacement.setY(0);
             }
         }
         if (left() && !right()) { // 左
-            displacement.setX(-avatar.walkSpeed);
+            displacement.setX(-moveDistance());
             tempCB = new CollisionBox(avatar.getCollisionBox(), displacement);
             if (gameMap.mapCollision(g, tempCB)) {
                 displacement.setX(0);
@@ -70,10 +70,14 @@ public abstract class MoveCtrl {
 
     // 返回x轴或者y轴的位移值，根据勾股定律计算
     private double moveDistance() {
-        for (int i = 0; i < urdl.length; i++) {
-
+        int directions = 0;
+        for (boolean b:urdl) {
+            if (b) directions++;
         }
-        return Math.sqrt(avatar.walkSpeed / 2);
+
+        if (directions % 2 == 1) {
+            return avatar.walkSpeed;
+        } else return Math.sqrt(avatar.walkSpeed * avatar.walkSpeed / 2);
     }
 
     /**
@@ -83,7 +87,7 @@ public abstract class MoveCtrl {
      * @param p         true: 按下  false: 释放
      */
     public void setDirection(String direction, Boolean p) {
-        if (p) {
+        if (p) { // 按下按键
             switch (direction) {
                 case "up":
                     setUp(true);
@@ -110,7 +114,7 @@ public abstract class MoveCtrl {
                     }
                     break;
             }
-        } else {
+        } else { // 放开按键
             switch (direction) {
                 case "up":
                     setUp(false);
@@ -133,12 +137,6 @@ public abstract class MoveCtrl {
         }
     }
 
-    public void readKey(String key) {
-        switch (key) {
-            case "up" :
-                
-        }
-    }
     private void setAvatarRefreshRate() {
         if (up() || right() || down() || left()) {
             avatar.setRefreshRate(GameSettings.AVATAR_REFRESH_RATE);

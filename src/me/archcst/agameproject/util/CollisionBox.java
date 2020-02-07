@@ -7,6 +7,8 @@
 package me.archcst.agameproject.util;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
+import java.util.StringJoiner;
 
 public class CollisionBox implements Cloneable {
     public int x1;
@@ -77,47 +79,68 @@ public class CollisionBox implements Cloneable {
         return super.clone();
     }
 
+    // 是否覆盖某一线段，用于视野判断
+    public boolean coverLine(int x1, int y1, int x2, int y2) {
+        boolean up = Line2D.linesIntersect(x1, y1, x2, y2,
+                this.x1, this.y1, this.x2, this.y1);
+
+        boolean right = Line2D.linesIntersect(x1, y1, x2, y2,
+                this.x2, this.y2, this.x2, this.y2);
+
+        boolean down = Line2D.linesIntersect(x1, y1, x2, y2,
+                this.x2, this.y1, this.x2, this.y2);
+
+        boolean left = Line2D.linesIntersect(x1, y1, x2, y2,
+                this.x1, this.y1, this.x2, this.y1);
+
+        return up || right || down || left;
+    }
+
     @Override
     public boolean equals(Object object) {
+        boolean b = false;
         if (object instanceof CollisionBox) {
             CollisionBox box = (CollisionBox) object;
+            Rectangle thisRect = new Rectangle(x1, y1, width, height);
+            Rectangle objectRect = new Rectangle(box.x1, box.y1, box.width, box.height);
+            b = thisRect.intersects(objectRect);
             // object 在外层
-            if (this.x1 >= box.x1 && this.x1 <= box.x2) {
-                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
-                    return true;
-                }
-                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
-                    return true;
-                }
-            }
-            if (this.x2 >= box.x1 && this.x2 <= box.x2) {
-                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
-                    return true;
-                }
-                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
-                    return true;
-                }
-            }
-
-            // this 在外层
-            if (box.x1 >= this.x1 && box.x1 <= this.x2) {
-                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
-                    return true;
-                }
-                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
-                    return true;
-                }
-            }
-            if (box.x2 >= this.x1 && box.x2 <= this.x2) {
-                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
-                    return true;
-                }
-                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
-                    return true;
-                }
-            }
+//            if (this.x1 >= box.x1 && this.x1 <= box.x2) {
+//                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
+//                    return true;
+//                }
+//                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
+//                    return true;
+//                }
+//            }
+//            if (this.x2 >= box.x1 && this.x2 <= box.x2) {
+//                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
+//                    return true;
+//                }
+//                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
+//                    return true;
+//                }
+//            }
+//
+//            // this 在外层
+//            if (box.x1 >= this.x1 && box.x1 <= this.x2) {
+//                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
+//                    return true;
+//                }
+//                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
+//                    return true;
+//                }
+//            }
+//            if (box.x2 >= this.x1 && box.x2 <= this.x2) {
+//                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
+//                    return true;
+//                }
+//                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
+//                    return true;
+//                }
+//            }
         }
-        return false;
+        return b;
     }
 
     public void draw(Graphics g) {

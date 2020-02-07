@@ -53,13 +53,12 @@ public class DataCenter {
 
     public void drawFrame(Graphics g) {
         Camera.getInstance().updateCamera();
-        Target target = Target.getInstance();
         gameMap.draw(g);
         for (Monster m:monsters) {
             m.draw(g);
         }
         player.draw(g);
-        target.draw(g);
+        Target.getInstance().draw(g);
 
         // 画出地图所有碰撞箱
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
@@ -72,7 +71,7 @@ public class DataCenter {
     public void gameProcess(Graphics g) {
         player.moveCtrl.move(g);
         for (Monster m:monsters) {
-            m.moveCtrl.move(g);
+//            m.moveCtrl.move(g);
         }
         Target.getInstance().refreshTarget();
     }

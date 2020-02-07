@@ -17,7 +17,8 @@ public class Camera {
 
     private Camera() {
 //        cameraThread = new Thread(this);
-        beacon = new Point(Player.getInstance().getLocation());
+        beacon = new Point(Player.getInstance().getLocation().x - 12,
+                Player.getInstance().getLocation().y);
         cPoint = new Point(beacon);
 //        cameraThread.start();
     }
@@ -36,18 +37,18 @@ public class Camera {
     private Point cPoint; // 相机的指向
     private Point beacon; // 信标的坐标
 
-    public int cameraedX(int x) {
-        int panelCenterX = GamePanel.getInstance().getWidth() /2;
+    public int packX(int x) {
+        int panelCenterX = GamePanel.getInstance().getWidth() / 2;
         return panelCenterX - cPoint.x + x - GameSettings.BLOCK_SIZE / 2;
     }
 
-    public int cameraedY(int y) {
-        int panelCenterY = GamePanel.getInstance().getHeight() /2;
+    public int packY(int y) {
+        int panelCenterY = GamePanel.getInstance().getHeight() / 2;
         return panelCenterY - cPoint.y + y - GameSettings.BLOCK_SIZE / 2;
     }
 
     public Point cameraedPoint(Point point) {
-        return new Point(cameraedX(point.x), cameraedY(point.y));
+        return new Point(packX(point.x), packY(point.y));
     }
 
     public void setBeacon(Point point) {
@@ -68,10 +69,10 @@ public class Camera {
 //    }
 
     public void updateCamera() {
-            if (cPoint.x != beacon.x) {
+        if (cPoint.x != beacon.x) {
             if (beacon.x >= cPoint.x + GameSettings.CAMERA_SPEED) {
                 cPoint.x += GameSettings.CAMERA_SPEED;
-            } else if ( beacon.x <= cPoint.x - GameSettings.CAMERA_SPEED){
+            } else if (beacon.x <= cPoint.x - GameSettings.CAMERA_SPEED) {
                 cPoint.x -= GameSettings.CAMERA_SPEED;
             }
         }
@@ -79,7 +80,7 @@ public class Camera {
         if (cPoint.y != beacon.y) {
             if (beacon.y >= cPoint.y + GameSettings.CAMERA_SPEED) {
                 cPoint.y += GameSettings.CAMERA_SPEED;
-            } else if (beacon.y <= cPoint.y - GameSettings.CAMERA_SPEED){
+            } else if (beacon.y <= cPoint.y - GameSettings.CAMERA_SPEED) {
                 cPoint.y -= GameSettings.CAMERA_SPEED;
             }
         }

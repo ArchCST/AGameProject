@@ -7,8 +7,12 @@
 package me.archcst.agameproject.datacenter;
 
 import me.archcst.agameproject.avatar.*;
+import me.archcst.agameproject.avatar.monsters.Monster;
+import me.archcst.agameproject.avatar.monsters.Monster_Slime;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
+import me.archcst.agameproject.util.CollisionBox;
+import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,27 +23,28 @@ public class DataCenter {
     private Player player;
     private ArrayList<Monster> monsters;
 
-    public static DataCenter getInstance(Graphics g) {
+    public static DataCenter getInstance() {
         if (dataCenter == null) {
-            dataCenter = new DataCenter(g);
+            dataCenter = new DataCenter();
         }
         return dataCenter;
     }
 
-    private DataCenter(Graphics g) {
+    private DataCenter() {
         gameMap = GameMap.getInstance();
         player = Player.getInstance();
         monsters = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             monsters.add(new Monster_Slime(1, 1));
-            monsters.add(new Monster_Devil(1, 2));
-            monsters.add(new Monster_Dragon(1, 3));
-            monsters.add(new Monster_Orc(1, 2));
+//            monsters.add(new Monster_Slime(1, 1));
+//            monsters.add(new Monster_Devil(1, 2));
+//            monsters.add(new Monster_Dragon(1, 3));
+//            monsters.add(new Monster_Orc(1, 2));
         }
 
         for (Monster m: monsters) {
-            m.initLocation(g);
+            m.initLocation();
         }
     }
 
@@ -50,6 +55,13 @@ public class DataCenter {
         for (Monster m:monsters) {
             m.draw(g);
         }
+
+        // 画出地图所有碰撞箱
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
+            for (CollisionBox cb:gameMap.getAllMapCollisionBox()) {
+                cb.draw(g);
+            }
+        }
     }
 
     public void gameProcess(Graphics g) {
@@ -57,9 +69,5 @@ public class DataCenter {
         for (Monster m:monsters) {
             m.moveCtrl.move(g);
         }
-    }
-
-    public ArrayList<Monster> getMonsters() {
-        return monsters;
     }
 }

@@ -6,14 +6,12 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 import java.util.Random;
 
-public class MonsterMoveCtrl extends MoveCtrl{
+public class MonsterMoveCtrl extends MoveCtrl {
     private long startTime = System.currentTimeMillis();
     private long randomTime;
     private Random r = GameSettings.r;
@@ -43,6 +41,7 @@ public class MonsterMoveCtrl extends MoveCtrl{
         clearDirection();
         // 怪物待机
         if (r.nextDouble() < GameSettings.MONSTER_IDLE_CHANCE) {
+            avatar.currentAction = "idle";
             return;
         }
         int mainDirection = r.nextInt(4); // 主方向，也是面朝方向

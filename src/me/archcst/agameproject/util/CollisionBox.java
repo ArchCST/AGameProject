@@ -6,8 +6,6 @@
 
 package me.archcst.agameproject.util;
 
-import me.archcst.agameproject.map.MapBlock;
-
 import java.awt.*;
 
 public class CollisionBox implements Cloneable {
@@ -120,5 +118,11 @@ public class CollisionBox implements Cloneable {
             }
         }
         return false;
+    }
+
+    public void draw(Graphics g) {
+        Camera camera = Camera.getInstance();
+        g.setColor(Color.YELLOW);
+        g.drawRect(camera.packX(x1), camera.packY(y1), width, height);
     }
 }

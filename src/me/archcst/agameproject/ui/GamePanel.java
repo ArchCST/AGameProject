@@ -53,13 +53,16 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        DataCenter dataCenter = DataCenter.getInstance(g);
+        DataCenter dataCenter = DataCenter.getInstance();
         dataCenter.drawFrame(g);
         dataCenter.gameProcess(g);
 
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_PANEL_CENTRAL_POINT) {
             g.setColor(Color.WHITE);
-            g.drawString("╋", getWidth() / 2 - 8, getHeight() / 2 + 8);
+//            g.drawString("╋", getWidth() / 2 - 8, getHeight() / 2 + 8);
+            g.fillRect(getWidth()/2 - 3, getHeight() /2 -3 , 6, 6);
         }
+
+
     }
 }

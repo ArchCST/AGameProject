@@ -6,8 +6,6 @@
 
 package me.archcst.agameproject;
 
-import me.archcst.agameproject.avatar.Player;
-import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GameFrame;
 
 public class Demo {

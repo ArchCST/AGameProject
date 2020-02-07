@@ -6,90 +6,85 @@
 
 package me.archcst.agameproject.map;
 
-import me.archcst.agameproject.ui.GamePanel;
 import me.archcst.agameproject.util.Camera;
-import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
+import java.util.Random;
 
 public class MapBlock {
-    private Image image; // 地图图片
-    private Point mPoint; // 地图上的坐标
-    private Point sPoint; // 图片上的坐标
-    private Dimension dimension; // 大小
-    private CollisionBox collisionBox; // 碰撞箱
+    public static String[][] images; // 地图块的ASCII图片
+    public int type;
+    public Point mPoint;
 
-    /**
-     * 构造地图块
-     * @param image 图片对象
-     * @param dimension 图片上的长和宽
-     * @param mPoint 屏幕上的坐标
-     * @param sPoint 图片上的坐标
-     * @param collisionBox 碰撞箱
-     */
-    public MapBlock(Image image, Dimension dimension, Point mPoint, Point sPoint, CollisionBox collisionBox) {
-        this.image = image;
-        this.dimension = dimension;
-        this.mPoint = mPoint;
-        this.sPoint = sPoint;
-        this.collisionBox = collisionBox;
+    static {
+        images = new String[3][3];
+
+        images[0][0] = "╭─╮";
+        images[0][1] = "│╳│";
+        images[0][2] = "╰─╯";
+
+        images[1][0] = "╭─╮";
+        images[1][1] = "│┼│";
+        images[1][2] = "╰─╯";
+
+        images[2][0] = "╭─╮";
+        images[2][1] = "│┼│";
+        images[2][2] = "╰─╯";
     }
 
-//    /**
-//     * 移动地图块
-//     * @param offset 偏移量
-//     */
-//    public void blockMove(Point offset) {
-//        mPoint.x += offset.x;
-//        mPoint.y += offset.y;
-//        // 也要移动碰撞箱
-//        collisionBox.boxMove(offset);
-//    }
+    public MapBlock(Point mPoint) {
+        Random r = GameSettings.r;
+        type = r.nextInt(images.length); // 此地图块为一个随机样式
 
-    private static Point roadPoint = new Point(96, 0); // 用于先画地板
-    private static Dimension roadDimension = new Dimension(48, 48); // 用于先画地板
+        this.mPoint = mPoint;
+    }
 
-    /**
-     * 画出地图块
-     */
     public void draw(Graphics g) {
         Camera camera = Camera.getInstance();
-        // 先画一层地板
-        g.drawImage(image,
-                camera.cameraedX(mPoint.x), camera.cameraedY(mPoint.y),
-                camera.cameraedX(mPoint.x) + roadDimension.width, camera.cameraedY(mPoint.y) + roadDimension.height,
-                roadPoint.x, roadPoint.y,
-                roadPoint.x + roadDimension.width, roadPoint.y + roadDimension.height,
-                GamePanel.getInstance());
 
-        // 再画上面的装饰
-        if (sPoint != roadPoint) {
-            g.drawImage(image,
-                    camera.cameraedX(mPoint.x), camera.cameraedY(mPoint.y),
-                    camera.cameraedX(mPoint.x) + dimension.width, camera.cameraedY(mPoint.y) + dimension.height,
-                    sPoint.x, sPoint.y,
-                    sPoint.x + dimension.width, sPoint.y + dimension.height,
-                    GamePanel.getInstance());
+//        g.setFont(GameSettings.FONT);
+        g.setColor(GameSettings.MAP_COLOR);
+        // 随机画任意一个地图块图形
+        for (int i = 0; i < images[0].length; i++) {
+            g.drawString(images[type][i],
+                    camera.packX(mPoint.x),
+                    // 字符修正
+                    camera.packY(mPoint.y + (i+1) * 14));
         }
 
         // 开发模式画所有地图块灰色外框
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_BLOCKS) {
-            g.setColor(Color.GRAY);
-            g.drawRect(camera.cameraedX(mPoint.x), camera.cameraedY(mPoint.y),
-                    dimension.width, dimension.height);
-        }
-
-        // 开发模式画碰撞箱
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
-            g.setColor(Color.BLUE);
-            g.drawRect(camera.cameraedX(collisionBox.x1), camera.cameraedY(collisionBox.y1),
-                    collisionBox.width, collisionBox.height);
-        }
-
+//        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_BLOCKS) {
+//            g.setColor(Color.GRAY);
+//            g.drawRect(camera.cameraedX(mPoint.x), camera.cameraedY(mPoint.y),
+//                    dimension.width, dimension.height);
+//        }
     }
 
-    public CollisionBox getCollisionBox() {
-        return collisionBox;
+    /**
+     * 清除该地图块
+     *
+     * @param g
+     */
+    public void clear(Graphics g) {
+        Camera camera = Camera.getInstance();
+        g.setColor(GameSettings.BACKGROUND_COLOR);
+        g.fillRect(camera.packX(mPoint.x), camera.packY(mPoint.y),
+                GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE);
+    }
+
+    /*
+     * setters & getters
+     */
+    public int x() {
+        return mPoint.x;
+    }
+
+    public int y() {
+        return mPoint.y;
+    }
+
+    public Point getmPoint() {
+        return mPoint;
     }
 }

@@ -6,7 +6,6 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -31,7 +30,7 @@ public class PlayerMoveCtrl extends MoveCtrl {
             if (left()) beacon.x = -GameSettings.BEACON_DISPLACEMENT;
         }
 
-        beacon.x += avatar.location.x;
+        beacon.x += avatar.location.x - 12;
         beacon.y += avatar.location.y;
 
         Camera camera = Camera.getInstance();

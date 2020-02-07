@@ -43,7 +43,7 @@ public class Framer {
         if (speed != 0) {
             return frame / speed;
         } else {
-            return 1;
+            return 0;
         }
     }
 }

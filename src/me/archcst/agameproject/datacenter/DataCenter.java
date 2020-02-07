@@ -8,14 +8,16 @@ package me.archcst.agameproject.datacenter;
 
 import me.archcst.agameproject.avatar.*;
 import me.archcst.agameproject.avatar.monsters.Monster;
-import me.archcst.agameproject.avatar.monsters.Monster_Slime;
+import me.archcst.agameproject.avatar.monsters.MonsterFactory;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
+import me.archcst.agameproject.util.Target;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DataCenter {
     private static DataCenter dataCenter = null;
@@ -31,12 +33,13 @@ public class DataCenter {
     }
 
     private DataCenter() {
+        Random r = GameSettings.r;
         gameMap = GameMap.getInstance();
         player = Player.getInstance();
         monsters = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            monsters.add(new Monster_Slime(1, 1));
+        for (int i = 0; i < 10; i++) {
+            monsters.add(MonsterFactory.createMonster(r.nextInt(MonsterFactory.MONSTER_TYPE_AMOUNT)));
 //            monsters.add(new Monster_Slime(1, 1));
 //            monsters.add(new Monster_Devil(1, 2));
 //            monsters.add(new Monster_Dragon(1, 3));
@@ -50,11 +53,13 @@ public class DataCenter {
 
     public void drawFrame(Graphics g) {
         Camera.getInstance().updateCamera();
+        Target target = Target.getInstance();
         gameMap.draw(g);
-        player.draw(g);
         for (Monster m:monsters) {
             m.draw(g);
         }
+        player.draw(g);
+        target.draw(g);
 
         // 画出地图所有碰撞箱
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
@@ -69,5 +74,10 @@ public class DataCenter {
         for (Monster m:monsters) {
             m.moveCtrl.move(g);
         }
+        Target.getInstance().refreshTarget();
+    }
+
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
     }
 }

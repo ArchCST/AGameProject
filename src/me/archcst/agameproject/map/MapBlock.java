@@ -18,7 +18,7 @@ public class MapBlock {
     public Point mPoint;
 
     static {
-        images = new String[3][3];
+        images = new String[5][3];
 
         images[0][0] = "╭─╮";
         images[0][1] = "│╳│";
@@ -29,8 +29,12 @@ public class MapBlock {
         images[1][2] = "╰─╯";
 
         images[2][0] = "╭─╮";
-        images[2][1] = "│┼│";
+        images[2][1] = "│　│";
         images[2][2] = "╰─╯";
+
+        images[3] = images[2];
+        images[4] = images[2];
+
     }
 
     public MapBlock(Point mPoint) {
@@ -50,7 +54,7 @@ public class MapBlock {
             g.drawString(images[type][i],
                     camera.packX(mPoint.x),
                     // 字符修正
-                    camera.packY(mPoint.y + (i+1) * 14));
+                    camera.packY(mPoint.y + (i+1) * GameSettings.FONT_SIZE));
         }
 
         // 开发模式画所有地图块灰色外框

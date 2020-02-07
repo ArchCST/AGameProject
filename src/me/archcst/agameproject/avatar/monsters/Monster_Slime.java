@@ -14,13 +14,13 @@ public class Monster_Slime extends Monster {
     public Monster_Slime(double zoom, int walkSpeed) {
         super(zoom);
         this.walkSpeed = walkSpeed;
-        size.width = 60;
-        size.height = 36;
+        size.width = 40;
+        size.height = 34;
         offset.width = -6;
-        offset.height = 5;
+        offset.height = 10;
 
         // 特定怪物的碰撞箱
-        setCollisionBox(0.8, 0.8, 0, 0.1);
+        setCollisionBox(1, 0.9, 0, 0.1);
 
         loadAction();
     }
@@ -30,34 +30,35 @@ public class Monster_Slime extends Monster {
         // 不动
         String[][] animate = new String[1][3];
 
-        animate[0][0] = "　︵___︵";
-        animate[0][1] = "（ ◎　◎ ）";
-        animate[0][2] = "　^^　^^";
+        animate[0][0] = "   ◜  ◝";
+        animate[0][1] = "（⦾  ⦾）";
+        animate[0][2] = "     ˇ";
 
         actions.put("idle", new Action(animate, Color.WHITE));
 
         // 右移
         animate = new String[2][3];
 
-        animate[0][0] = "　︵__︵";
-        animate[0][1] = "（　◎ ◎）";
-        animate[0][2] = "　>>　>>";
+        animate[0][0] = "    ◜  ◝";
+        animate[0][1] = "（ ⦾ ⦾）";
+        animate[0][2] = "      ◦";
 
-        animate[1][0] = "　︵__︵";
-        animate[1][1] = "（　◎ ◎）";
-        animate[1][2] = " 　>> >>";
+        animate[1][0] = "   ◜  ◝";
+        animate[1][1] = "（ ⦾ ⦾）";
+        animate[1][2] = "     ◦";
 
         actions.put("walk_right", new Action(animate, Color.WHITE));
 
         // 左移
         animate = new String[2][3];
-        animate[0][0] = "　︵__︵";
-        animate[0][1] = "（◎ ◎　）";
-        animate[0][2] = " << <<";
 
-        animate[1][0] = "　︵__︵";
-        animate[1][1] = "（◎ ◎　）";
-        animate[1][2] = "<<　<<";
+        animate[0][0] = " ◜  ◝";
+        animate[0][1] = "（⦾ ⦾ ）";
+        animate[0][2] = "    ◦";
+
+        animate[1][0] = "  ◜  ◝";
+        animate[1][1] = "（⦾ ⦾ ）";
+        animate[1][2] = "     ◦";
 
         actions.put("walk_left", new Action(animate, Color.WHITE));
     }

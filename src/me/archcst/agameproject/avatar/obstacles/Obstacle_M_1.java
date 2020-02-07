@@ -10,13 +10,13 @@ import me.archcst.agameproject.avatar.Action;
 
 import java.awt.*;
 
-public class Obstacle_Middle extends Obstacle {
-    public Obstacle_Middle() {
+public class Obstacle_M_1 extends Obstacle {
+    public Obstacle_M_1() {
         super();
         offset.width = -5;
         offset.height = 6;
         size.width = 55;
-        size.height = 72;
+        size.height = 68;
         setCollisionBox(1,1,0,0);
 
         loadAction();

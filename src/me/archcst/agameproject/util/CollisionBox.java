@@ -82,37 +82,37 @@ public class CollisionBox implements Cloneable {
         if (object instanceof CollisionBox) {
             CollisionBox box = (CollisionBox) object;
             // object 在外层
-            if (this.x1 > box.x1 && this.x1 < box.x2) {
-                if (this.y1 > box.y1 && this.y1 < box.y2) {
+            if (this.x1 >= box.x1 && this.x1 <= box.x2) {
+                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
                     return true;
                 }
-                if (this.y2 > box.y1 && this.y2 < box.y2) {
+                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
                     return true;
                 }
             }
-            if (this.x2 > box.x1 && this.x2 < box.x2) {
-                if (this.y1 > box.y1 && this.y1 < box.y2) {
+            if (this.x2 >= box.x1 && this.x2 <= box.x2) {
+                if (this.y1 >= box.y1 && this.y1 <= box.y2) {
                     return true;
                 }
-                if (this.y2 > box.y1 && this.y2 < box.y2) {
+                if (this.y2 >= box.y1 && this.y2 <= box.y2) {
                     return true;
                 }
             }
 
             // this 在外层
-            if (box.x1 > this.x1 && box.x1 < this.x2) {
-                if (box.y1 > this.y1 && box.y1 < this.y2) {
+            if (box.x1 >= this.x1 && box.x1 <= this.x2) {
+                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
                     return true;
                 }
-                if (box.y2 > this.y1 && box.y2 < this.y2) {
+                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
                     return true;
                 }
             }
-            if (box.x2 > this.x1 && box.x2 < this.x2) {
-                if (box.y1 > this.y1 && box.y1 < this.y2) {
+            if (box.x2 >= this.x1 && box.x2 <= this.x2) {
+                if (box.y1 >= this.y1 && box.y1 <= this.y2) {
                     return true;
                 }
-                if (box.y2 > this.y1 && box.y2 < this.y2) {
+                if (box.y2 >= this.y1 && box.y2 <= this.y2) {
                     return true;
                 }
             }

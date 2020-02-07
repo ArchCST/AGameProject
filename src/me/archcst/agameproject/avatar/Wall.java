@@ -19,7 +19,7 @@ public class Wall extends Avatar {
         currentAction = "idle";
         collisionBox = new CollisionBox();
         offset.width = 1;
-        offset.height = 12;
+        offset.height = 6;
         this.zoom = zoom;
         alive = true;
 
@@ -36,15 +36,15 @@ public class Wall extends Avatar {
 
     @Override
     protected void loadAction() {
-        String[][] animate = new String[1][3];
+        String[][] animate = new String[1][4];
 
-        animate[0][0] = "┏┳┓";
-        animate[0][1] = "┣╋┫";
-        animate[0][2] = "┗┻┛";
-//        animate[0][2] = "┣┻┫";
-//        animate[0][3] = "┗━┛";
+        animate[0][0] = "┏━┓";
+        animate[0][1] = "┃▢┃";
+//        animate[0][2] = "┗┻┛";
+        animate[0][2] = "┣━┫";
+        animate[0][3] = "┗━┛";
 
-        actions.put("idle", new Action(animate, Color.WHITE));
+        actions.put("idle", new Action(animate, Color.LIGHT_GRAY));
     }
 
     @Override

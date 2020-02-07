@@ -13,7 +13,6 @@ import java.awt.*;
 
 public class Camera {
     private static Camera camera = null;
-    private Thread cameraThread;
 
     private Camera() {
 //        cameraThread = new Thread(this);
@@ -70,18 +69,36 @@ public class Camera {
 
     public void updateCamera() {
         if (cPoint.x != beacon.x) {
-            if (beacon.x >= cPoint.x + GameSettings.CAMERA_SPEED) {
-                cPoint.x += GameSettings.CAMERA_SPEED;
-            } else if (beacon.x <= cPoint.x - GameSettings.CAMERA_SPEED) {
-                cPoint.x -= GameSettings.CAMERA_SPEED;
+            if (beacon.x > cPoint.x) {
+                if (beacon.x >= cPoint.x  + GameSettings.CAMERA_SPEED) {
+                    cPoint.x += GameSettings.CAMERA_SPEED;
+                } else {
+                    cPoint.x = beacon.x;
+                }
+            }
+            if (beacon.x < cPoint.x) {
+                if (beacon.x <= cPoint.x - GameSettings.CAMERA_SPEED) {
+                    cPoint.x -= GameSettings.CAMERA_SPEED;
+                } else {
+                    cPoint.x = beacon.x;
+                }
             }
         }
 
         if (cPoint.y != beacon.y) {
-            if (beacon.y >= cPoint.y + GameSettings.CAMERA_SPEED) {
-                cPoint.y += GameSettings.CAMERA_SPEED;
-            } else if (beacon.y <= cPoint.y - GameSettings.CAMERA_SPEED) {
-                cPoint.y -= GameSettings.CAMERA_SPEED;
+            if (beacon.y > cPoint.y) {
+                if (beacon.y >= cPoint.y  + GameSettings.CAMERA_SPEED) {
+                    cPoint.y += GameSettings.CAMERA_SPEED;
+                } else {
+                    cPoint.y = beacon.y;
+                }
+            }
+            if (beacon.y < cPoint.y) {
+                if (beacon.y <= cPoint.y - GameSettings.CAMERA_SPEED) {
+                    cPoint.y -= GameSettings.CAMERA_SPEED;
+                } else {
+                    cPoint.y = beacon.y;
+                }
             }
         }
     }

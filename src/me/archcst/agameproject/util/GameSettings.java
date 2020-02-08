@@ -11,21 +11,21 @@ import java.util.Random;
 
 public class GameSettings {
     // 开发
-    public static Random r = new Random(3); // 控制游戏所有的随机数产生，可添加seed进行测试
+    public static Random r = new Random(); // 控制游戏所有的随机数产生，可添加seed进行测试
     public static final boolean DEV_MODE = true; // 开发模式开关
     public static final boolean DEV_SHOW_AVATAR_COLLISION_BOX = false; // 画出所有角色的碰撞箱
     public static final boolean DEV_SHOW_AVATAR_BOX = false; // 画出所有角色的外框
     public static final boolean DEV_SHOW_MAP_COLLISION_BOX = false; // 画出地图的碰撞箱
     public static final boolean DEV_SHOW_CONFLICT_COLLISION_BOX = false; // 画出发生碰撞的碰撞箱
     public static final boolean DEV_SHOW_TEMP_COLLISION_BOX = false; // 画出发生位移前用来预判的碰撞箱
-    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = false; // 画出Panel的中心点
+    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = true; // 画出Panel的中心点
 
     // 游戏基本设置
+    public static final boolean SHOW_AIMING = false; // 显示准星
     public static final int GAME_WIDTH = 1280; // 游戏界面的宽度
     public static final int GAME_HEIGHT = 720; // 游戏界面的高度
     public static final long GAME_SLEEP_TIME = 8; // 游戏帧数控制
     public static final int AVATAR_REFRESH_RATE = 16; // 角色动画刷新频率
-    public static final boolean SHOW_AIMING = true; // 显示准星
 
     // 地图
     public static final int MAP_MIN_WIDTH = 10; // 地图最小宽度

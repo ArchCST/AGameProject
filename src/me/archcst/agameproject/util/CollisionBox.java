@@ -83,16 +83,21 @@ public class CollisionBox implements Cloneable {
                 this.x1, this.y1, this.x2, this.y1);
 
         boolean right = Line2D.linesIntersect(x1, y1, x2, y2,
-                this.x2, this.y2, this.x2, this.y2);
-
-        boolean down = Line2D.linesIntersect(x1, y1, x2, y2,
                 this.x2, this.y1, this.x2, this.y2);
 
+        boolean down = Line2D.linesIntersect(x1, y1, x2, y2,
+                this.x1, this.y2, this.x2, this.y2);
+
         boolean left = Line2D.linesIntersect(x1, y1, x2, y2,
-                this.x1, this.y1, this.x2, this.y1);
+                this.x1, this.y1, this.x1, this.y2);
 
         return up || right || down || left;
     }
+
+    public boolean coverLine(Line2D line2D) {
+        return coverLine(line2D.getX1(), line2D.getY1(), line2D.getX2(), line2D.getY2());
+    }
+
 
     // 碰撞
     public boolean crash(CollisionBox cb) {

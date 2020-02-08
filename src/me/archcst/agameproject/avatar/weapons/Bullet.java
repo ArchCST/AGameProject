@@ -7,11 +7,16 @@
 package me.archcst.agameproject.avatar.weapons;
 
 import me.archcst.agameproject.avatar.Avatar;
+import me.archcst.agameproject.avatar.Player;
+import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.map.DPoint;
+import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
+import me.archcst.agameproject.util.CollisionBox;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 
 public class Bullet {
     private String image;
@@ -44,7 +49,7 @@ public class Bullet {
      * 计算每一帧 x 轴和 y 轴的偏移量，以及子弹初始位置
      */
     public void initLocationAndOffset() {
-        DPoint al = new DPoint(belongs.getCenter().x() + 22, belongs.getCenter().y() + 22); // 所有者中心点
+        DPoint al = belongs.getCenter(); // 所有者中心点
 
         double targetDistance = Math.sqrt((targetPoint.x() - al.x()) * (targetPoint.x() - al.x()) +
                 (targetPoint.y() - al.y()) * (targetPoint.y() - al.y()));
@@ -66,12 +71,27 @@ public class Bullet {
                 location.x() + offset.x(), location.y() + offset.y());
         // 更新当前子弹坐标
         location.move(offset);
+
+        // 如果撞到墙
     }
 
-    public void hit() {
-//        belongs.getWeapon().getBullets().remove(this); // 从子弹列表中删除
-        // 为 avatar 新增受击体
+    public boolean hitWall() {
+        GameMap gameMap = GameMap.getInstance();
+        ArrayList<CollisionBox> mc = gameMap.getAllMapCollisionBox();
+        for (CollisionBox cb: mc) {
+            if (cb.coverLine(collisionLine)) {
+                return true;
+            }
+        }
+        return false;
         // 子弹坐标爆炸
+    }
+
+    public boolean hitBox(CollisionBox box) {
+        if (box.coverLine(collisionLine)) {
+            return true;
+        }
+        return false;
     }
 
     public void draw(Graphics g) {
@@ -85,6 +105,4 @@ public class Bullet {
         g.drawLine(camera.packX(collisionLine.getX1()), camera.packY(collisionLine.getY1()),
                 camera.packX(collisionLine.getX2()), camera.packY(collisionLine.getY2()));
     }
-
-
 }

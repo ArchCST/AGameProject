@@ -15,9 +15,9 @@ public class Camera {
 
     private Camera() {
 //        cameraThread = new Thread(this);
-        beacon = new DPoint(Player.getInstance().getLocation().x() - 12,
-                Player.getInstance().getLocation().y());
-//        beacon = Player.getInstance().getCenter();
+//        beacon = new DPoint(Player.getInstance().getLocation().x() - 12,
+//                Player.getInstance().getLocation().y());
+        beacon = Player.getInstance().getCenter();
         cLocation = new DPoint(beacon);
 //        cameraThread.start();
     }

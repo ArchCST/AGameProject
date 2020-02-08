@@ -21,7 +21,7 @@ import java.util.Vector;
 public class Player extends Avatar {
     private static Player player = null;
 
-    public static Player getInstance(){
+    public static Player getInstance() {
         if (player == null) {
             synchronized (Player.class) {
                 if (player == null) {
@@ -126,6 +126,7 @@ public class Player extends Avatar {
     }
 
     public DPoint getCenter() {
-        return new DPoint(location.x() - 12, location.y());
+        return new DPoint(location.x() + (double) size.width / 2,
+                location.y() + (double) size.height / 2);
     }
 }

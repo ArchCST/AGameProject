@@ -26,11 +26,12 @@ import java.util.Vector;
 
 public class DataCenter {
     private static DataCenter dataCenter = null;
-    private GameMap gameMap;
-    private Player player;
-    private ArrayList<Monster> monsters;
-    public Vector<Bullet> playBullets;
-    public Vector<Bullet> monsterBullets;
+    private GameMap gameMap; // 游戏地图
+    private Player player; // 玩家
+    private ArrayList<Monster> monsters; // 所有怪物
+    public Vector<Bullet> playBullets; // 所有的玩家子弹
+    public Vector<Bullet> monsterBullets; // 所有的怪物子弹
+    private long startTime; // 启动游戏的时间
 
     public static DataCenter getInstance() {
         if (dataCenter == null) {
@@ -57,6 +58,7 @@ public class DataCenter {
             monsterWeapon.setAvatar(monster);
             monsters.add(monster);
         }
+        startTime = System.currentTimeMillis();
     }
 
     public void drawFrame(Graphics g) {
@@ -101,6 +103,11 @@ public class DataCenter {
     }
 
     public void gameProcess(Graphics g) {
+        // 游戏胜利
+        if (monsters.size() == 0) {
+            win();
+        }
+
         // 玩家移动控制
         player.moveCtrl.move(g);
 
@@ -118,19 +125,27 @@ public class DataCenter {
         // todo 有没有必要套if？foreach中如果size为0是不是不会执行循环体？
         if (playBullets.size() > 0) {
             for (int i = playBullets.size() - 1; i >= 0 ; i--) {
+                Bullet b = playBullets.get(i);
                 // 计算下一个坐标
-                playBullets.get(i).nextLocation();
+                b.nextLocation();
                 // 如果碰墙，移除子弹
-                if (playBullets.get(i).hitWall()) {
+                if (b.hitWall()) {
                     playBullets.remove(i);
                     continue;
                 }
                 // 计算是否碰撞到怪物
-                for (Monster m:monsters) {
+                for (int j = monsters.size() - 1; j >=0 ; j--) {
+                    Monster m = monsters.get(j);
                     // 怪物的受击体为它的碰撞箱
                     CollisionBox box = m.getCollisionBox();
-                    if (playBullets.get(i).hitBox(box)) {
-                        playBullets.remove(i);
+                    if (b.hitBox(box)) {
+                        // 怪物掉血
+                        m.changeHp(-b.getDamage());
+                        if (m.getHp() == 0) {
+                            m.die(); // 怪物死亡函数
+                            monsters.remove(m);
+                        }
+                        playBullets.remove(b);
                         break;
                     }
                 }
@@ -141,9 +156,10 @@ public class DataCenter {
         if (monsterBullets.size() > 0) {
             for (int i = monsterBullets.size() - 1; i>=0; i--) {
                 // 计算下一个坐标
-                monsterBullets.get(i).nextLocation();
+                Bullet b = monsterBullets.get(i);
+                b.nextLocation();
                 // 如果碰墙，移除子弹
-                if (monsterBullets.get(i).hitWall()) {
+                if (b.hitWall()) {
                     monsterBullets.remove(i);
                     continue;
                 }
@@ -154,8 +170,12 @@ public class DataCenter {
                         player.getCenter().y() - 18,
                         player.getCenter().x() + 6,
                         player.getCenter().y() + 18);
-                if (monsterBullets.get(i).hitBox(box)) {
-                    monsterBullets.remove(i);
+                if (b.hitBox(box)) {
+                    player.changeHp(-b.getDamage());
+                    if (player.getHp() == 0) {
+                        gameOver();
+                    }
+                    monsterBullets.remove(b);
                 }
             }
         }
@@ -166,5 +186,14 @@ public class DataCenter {
 
     public ArrayList<Monster> getMonsters() {
         return monsters;
+    }
+
+    private void gameOver() {
+        System.out.println("游戏结束");
+    }
+
+    private void win() {
+        System.out.println("游戏胜利");
+        long recode = System.currentTimeMillis() - startTime; // 用时
     }
 }

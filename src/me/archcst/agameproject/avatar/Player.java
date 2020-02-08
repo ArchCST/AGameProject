@@ -40,6 +40,8 @@ public class Player extends Avatar {
         alive = true;
         moveCtrl = new PlayerMoveCtrl(this);
         weapon = new Weapon_Player();
+        hp = 95;
+        maxHp = 100;
 
         loadAction();
         location = new DPoint(
@@ -123,10 +125,34 @@ public class Player extends Avatar {
                     camera.packX(location.x() + weapon.offsetRight().x()),
                     camera.packY(location.y() + weapon.offsetRight().y()));
         }
+
+        // 画血量
+        drawBlood(g);
     }
 
-    public DPoint getCenter() {
-        return new DPoint(location.x() + (double) size.width / 2,
-                location.y() + (double) size.height / 2);
+    private void drawBlood(Graphics g) {
+        String[] blood = new String[5];
+        blood[0] = "╭─────────────╮";
+        blood[1] = "│　　　　　　　　　　　　　│";
+        blood[2] = "│　　　　　　　　　　　　　│";
+        blood[3] = "│　　　　　　　　　　　　　│";
+        blood[4] = "╰─────────────╯";
+
+        g.setColor(GameSettings.BACKGROUND_COLOR);
+        g.fillRect(30, 30, 183, 55);
+        for (int i = 0; i < blood.length; i++) {
+            g.setColor(Color.WHITE);
+            g.drawString(blood[i], 24, 34 + i*14);
+        }
+
+        g.drawString("HP:", 39, 50);
+        g.drawString("MP:", 39, 75);
+        g.drawRect(67, 35, 140, 20);
+        g.drawRect(67, 60, 140, 20);
+
+        // 画血量条
+        double hpPercent = (double) hp / maxHp;
+        g.setColor(Color.WHITE);
+        g.fillRect(69, 37, (int) (136 * hpPercent), 16);
     }
 }

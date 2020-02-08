@@ -26,6 +26,7 @@ public abstract class Weapon {
 
     protected int speed; // 射速，每分钟多少颗子弹
     protected double gap; // 射击间隙
+    protected int damage; // 子弹默认伤害
     protected double cri; // 暴击率
     protected double crd; // 暴击倍率
 

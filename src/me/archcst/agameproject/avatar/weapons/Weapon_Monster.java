@@ -34,7 +34,7 @@ public class Weapon_Monster extends Weapon {
 
     @Override
     protected void generateBullet() {
-        Bullet bullet = new Bullet(avatar, Player.getInstance().getCenter());
+        Bullet bullet = new Bullet(avatar, Player.getInstance().getCenter(), 5);
         bullet.initBullet("◉", Color.WHITE, -4, 4, 3);
 
         DataCenter.getInstance().monsterBullets.add(bullet);

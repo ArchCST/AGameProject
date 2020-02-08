@@ -19,18 +19,26 @@ import java.util.HashMap;
 public abstract class Avatar {
     public final HashMap<String, Action> actions = new HashMap<>(); //角色所有动作的集合
     protected String currentAction; // 当前动作
+
     protected Weapon weapon; // 角色的武器
-    protected boolean attacking; // 攻击中
+    protected boolean attacking; // 攻击控制
 
     protected DPoint location; // 角色的坐标
-    protected Dimension offset; // 字体Y轴修正
+    protected Dimension offset; // 字体打印位置修正
+
     protected double walkSpeed; // 移动速度
     protected int refreshRate; // 动画刷新率
+
     protected Dimension size; // 原始大小
     protected double zoom; // 角色放大系数
+
     protected CollisionBox collisionBox; // 碰撞箱
     protected Boolean alive; // 是否存活
+
     public MoveCtrl moveCtrl; // 移动控制器
+
+    protected int hp; // 当前血量
+    protected int maxHp; // 满血量
 
     protected Avatar() {
         currentAction = "idle";
@@ -48,6 +56,7 @@ public abstract class Avatar {
         } else {
             System.out.println("找不到动作: " + currentAction);
         }
+
         String[] animateByFrame = action.getAnimateByFrame(frame);
 
         // 清空绘画区域的地图
@@ -77,9 +86,6 @@ public abstract class Avatar {
 
     }
 
-
-    protected abstract void loadAction();
-
     /**
      * 移动角色
      *
@@ -90,7 +96,6 @@ public abstract class Avatar {
         // 也要移动碰撞箱
         collisionBox.boxMove(x, y);
     }
-
 
     /**
      * 移动角色
@@ -110,6 +115,15 @@ public abstract class Avatar {
         return collisionBox;
     }
 
+    /*
+     * abstract methods
+     */
+    public abstract void attack();
+    protected abstract void loadAction();
+
+    /*
+     * Getters & setters
+     */
     /**
      * 设置碰撞箱
      *
@@ -132,6 +146,16 @@ public abstract class Avatar {
         collisionBox.boxMove(offset);
     }
 
+    public void changeHp(int amount) {
+        hp += amount;
+        hp = Math.min(hp, maxHp);
+        hp = Math.max(0, hp);
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
     public Dimension getSize() {
         return size;
     }
@@ -148,14 +172,6 @@ public abstract class Avatar {
         this.alive = alive;
     }
 
-    public int getRefreshRate() {
-        return refreshRate;
-    }
-
-    public void setRefreshRate(int refreshRate) {
-        this.refreshRate = refreshRate;
-    }
-
     public DPoint getLocation() {
         return location;
     }
@@ -168,11 +184,6 @@ public abstract class Avatar {
         this.currentAction = currentAction;
     }
 
-    public void die() {
-        currentAction = "die";
-        alive = true;
-    }
-
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
@@ -180,8 +191,6 @@ public abstract class Avatar {
     public Weapon getWeapon() {
         return weapon;
     }
-
-    public abstract void attack();
 
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;
@@ -191,7 +200,18 @@ public abstract class Avatar {
         return attacking;
     }
 
+
     public DPoint getCenter(){
-        return location;
+        return new DPoint(location.x() + (double) size.width / 2,
+                location.y() + (double) size.height / 2);
     };
+
+    public int getRefreshRate() {
+        return refreshRate;
+    }
+
+    public void setRefreshRate(int refreshRate) {
+        this.refreshRate = refreshRate;
+    }
+
 }

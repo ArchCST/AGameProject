@@ -18,7 +18,7 @@ public class GameSettings {
     public static final boolean DEV_SHOW_MAP_COLLISION_BOX = false; // 画出地图的碰撞箱
     public static final boolean DEV_SHOW_CONFLICT_COLLISION_BOX = false; // 画出发生碰撞的碰撞箱
     public static final boolean DEV_SHOW_TEMP_COLLISION_BOX = false; // 画出发生位移前用来预判的碰撞箱
-    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = true; // 画出Panel的中心点
+    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = false; // 画出Panel的中心点
 
     // 游戏基本设置
     public static final boolean SHOW_AIMING = false; // 显示准星

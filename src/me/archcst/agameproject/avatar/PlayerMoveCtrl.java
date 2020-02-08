@@ -31,8 +31,7 @@ public class PlayerMoveCtrl extends MoveCtrl {
             if (left()) beacon.setX(-GameSettings.BEACON_DISPLACEMENT);
         }
 
-        beacon.moveX(avatar.location.x() - 12);
-        beacon.moveY(avatar.location.y());
+        beacon.move(avatar.getCenter());
 
         Camera.getInstance().setBeacon(beacon);
     }

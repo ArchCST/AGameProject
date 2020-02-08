@@ -14,6 +14,7 @@ import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
+import me.archcst.agameproject.util.GameSettings;
 
 import java.awt.*;
 import java.util.Vector;
@@ -30,6 +31,8 @@ public abstract class Monster extends Avatar {
         this.zoom = zoom;
         alive = true;
         weapon = new Weapon_Monster();
+        hp = 100;
+        maxHp = 100;
     }
 
     public void initLocation() {
@@ -40,6 +43,32 @@ public abstract class Monster extends Avatar {
     @Override
     public void attack() {
         weapon.shoot();
+    }
+
+    public void die() {
+    }
+
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        drawBlood(g);
+    }
+
+    private void drawBlood(Graphics g) {
+        Camera camera = Camera.getInstance();
+        int x = camera.packX(getCenter().x() - 20);
+        int y = camera.packY(location.y() - 20);
+
+        // 画外框
+        g.setColor(GameSettings.BACKGROUND_COLOR);
+        g.fillRect(x, y, 40, 8);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawRect(x, y, 40, 8);
+
+//         画血量条
+        double hpPercent = (double) hp / maxHp;
+        g.fillRect(x + 2, y+2, (int) (36 * hpPercent), 4);
     }
 
     //    Point mapOffset = GameMap.getInstance().getOffset();

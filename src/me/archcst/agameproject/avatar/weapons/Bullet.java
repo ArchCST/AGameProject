@@ -7,8 +7,6 @@
 package me.archcst.agameproject.avatar.weapons;
 
 import me.archcst.agameproject.avatar.Avatar;
-import me.archcst.agameproject.avatar.Player;
-import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
@@ -28,10 +26,12 @@ public class Bullet {
     private DPoint offset; // 每帧子弹偏移
     private Line2D collisionLine; // 单颗子弹位移时的碰撞线
     private double distance; // 每一帧子弹的位移距离
+    private int damage; // 子弹的伤害
 
-    public Bullet(Avatar belongs, DPoint targetPoint) {
+    public Bullet(Avatar belongs, DPoint targetPoint, int damage) {
         this.targetPoint = targetPoint;
         this.belongs = belongs;
+        this.damage = damage;
         offset = new DPoint();
         location = new DPoint();
         collisionLine = new Line2D.Double();
@@ -104,5 +104,9 @@ public class Bullet {
         // 碰撞线，正好可以作为子弹的拖尾
         g.drawLine(camera.packX(collisionLine.getX1()), camera.packY(collisionLine.getY1()),
                 camera.packX(collisionLine.getX2()), camera.packY(collisionLine.getY2()));
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

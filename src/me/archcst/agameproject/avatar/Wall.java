@@ -6,7 +6,7 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.map.Location;
+import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -15,7 +15,7 @@ import java.awt.*;
 public class Wall extends Avatar {
 
     public Wall(int zoom, int x, int y) {
-        this.location = new Location(x, y);
+        this.location = new DPoint(x, y);
         size = new Dimension(GameSettings.BLOCK_SIZE,GameSettings.BLOCK_SIZE);
         currentAction = "idle";
         collisionBox = new CollisionBox();
@@ -55,5 +55,10 @@ public class Wall extends Avatar {
 //        g.fillRect(camera.cameraedX(location.x),camera.cameraedY(location.y),
 //                sSize.width, sSize.height);
         super.draw(g);
+    }
+
+    @Override
+    public void attack() {
+        System.out.println("Can't shoot");
     }
 }

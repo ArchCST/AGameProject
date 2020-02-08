@@ -6,23 +6,23 @@
 
 package me.archcst.agameproject.map;
 
-public class Location {
+public class DPoint {
     private double x;
     private double y;
 
-    public Location() {
+    public DPoint() {
         x = 0;
         y = 0;
     }
 
-    public Location(double x, double y) {
+    public DPoint(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public Location(Location location) {
-        x = location.x;
-        y = location.y;
+    public DPoint(DPoint DPoint) {
+        x = DPoint.x;
+        y = DPoint.y;
     }
 
     public int intX() {
@@ -49,9 +49,9 @@ public class Location {
         this.y += y;
     }
 
-    public void moveLocation(Location location) {
-        x += location.x;
-        y += location.y;
+    public void move(DPoint DPoint) {
+        x += DPoint.x;
+        y += DPoint.y;
     }
 
     public void setX(double x) {

@@ -35,8 +35,8 @@ public class GameKeyListener implements KeyListener {
                 player.moveCtrl.setDirection("down", true);
                 break;
                 // todo 死亡
-            case KeyEvent.VK_X:
-                player.die();
+            case KeyEvent.VK_J:
+                player.setAttacking(true);
                 break;
         }
     }
@@ -56,6 +56,9 @@ public class GameKeyListener implements KeyListener {
                 break;
             case KeyEvent.VK_S:
                 player.moveCtrl.setDirection("down", false);
+                break;
+            case KeyEvent.VK_J:
+                player.setAttacking(false);
                 break;
         }
     }

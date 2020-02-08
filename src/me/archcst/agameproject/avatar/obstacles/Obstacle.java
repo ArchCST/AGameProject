@@ -6,12 +6,8 @@
 
 package me.archcst.agameproject.avatar.obstacles;
 
-import me.archcst.agameproject.avatar.Action;
 import me.archcst.agameproject.avatar.Avatar;
-import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.map.Location;
-import me.archcst.agameproject.util.CollisionBox;
-import me.archcst.agameproject.util.GameSettings;
+import me.archcst.agameproject.map.DPoint;
 
 import java.awt.*;
 
@@ -19,10 +15,14 @@ public abstract class Obstacle extends Avatar {
 
     public Obstacle() {
         zoom = 1;
-        this.location = new Location();
+        this.location = new DPoint();
         alive = true;
         size = new Dimension();
         currentAction = "idle";
+    }
 
+    @Override
+    public void attack() {
+        System.out.println("无法射击");
     }
 }

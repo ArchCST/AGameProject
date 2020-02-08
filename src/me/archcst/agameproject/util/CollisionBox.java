@@ -6,7 +6,7 @@
 
 package me.archcst.agameproject.util;
 
-import me.archcst.agameproject.map.Location;
+import me.archcst.agameproject.map.DPoint;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -50,7 +50,7 @@ public class CollisionBox implements Cloneable {
     }
 
 
-    public CollisionBox(CollisionBox collisionBox, Location offset) {
+    public CollisionBox(CollisionBox collisionBox, DPoint offset) {
         x1 = collisionBox.x1 + offset.x();
         y1 = collisionBox.y1 + offset.y();
         x2 = collisionBox.x2 + offset.x();
@@ -60,7 +60,7 @@ public class CollisionBox implements Cloneable {
     }
 
 
-    public synchronized void boxMove(Location offset) {
+    public synchronized void boxMove(DPoint offset) {
         boxMove(offset.x(), offset.y());
     }
 

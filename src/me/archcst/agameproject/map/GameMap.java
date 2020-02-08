@@ -6,8 +6,6 @@
 
 package me.archcst.agameproject.map;
 
-import me.archcst.agameproject.avatar.Avatar;
-import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.avatar.obstacles.Obstacle;
 import me.archcst.agameproject.avatar.Wall;
 import me.archcst.agameproject.avatar.obstacles.ObstacleFactory;
@@ -123,9 +121,9 @@ public class GameMap {
         int amount = (int) (GameSettings.OBSTACLE_RATE * mapSize.width * mapSize.height);
         for (int i = 0; i < amount; i++) {
             Obstacle obstacle = ObstacleFactory.createObstacle(r.nextInt(ObstacleFactory.OBSTACLE_TYPE_AMOUNT));
-            Location location = randomLocation(obstacle.getCollisionBox());
-            obstacle.setLocation(location);
-            obstacle.getCollisionBox().boxMove(location);
+            DPoint DPoint = randomLocation(obstacle.getCollisionBox());
+            obstacle.setLocation(DPoint);
+            obstacle.getCollisionBox().boxMove(DPoint);
 
             obstacles.add(obstacle);
         }
@@ -137,17 +135,17 @@ public class GameMap {
      * @param cb 传入的碰撞箱
      * @return 合适的坐标
      */
-    public Location randomLocation(CollisionBox cb) {
-        Location location = new Location(); // 返回值
+    public DPoint randomLocation(CollisionBox cb) {
+        DPoint DPoint = new DPoint(); // 返回值
         Random r = GameSettings.r;
         CollisionBox tempCB = null;
         do {
-            location.setX(r.nextInt(mapSize.width * GameSettings.BLOCK_SIZE));
-            location.setY(r.nextInt(mapSize.height * GameSettings.BLOCK_SIZE));
-            tempCB = new CollisionBox(cb, location);
+            DPoint.setX(r.nextInt(mapSize.width * GameSettings.BLOCK_SIZE));
+            DPoint.setY(r.nextInt(mapSize.height * GameSettings.BLOCK_SIZE));
+            tempCB = new CollisionBox(cb, DPoint);
         } while (mapCollision(tempCB) || tempCB.equals(safeArea));
 
-        return location;
+        return DPoint;
     }
 
     /**

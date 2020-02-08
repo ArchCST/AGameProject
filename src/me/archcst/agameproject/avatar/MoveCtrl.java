@@ -6,10 +6,8 @@
 
 package me.archcst.agameproject.avatar;
 
-import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.map.Location;
-import me.archcst.agameproject.util.Camera;
+import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 
@@ -32,7 +30,7 @@ public abstract class MoveCtrl {
     protected void validateAndMove(Graphics g) {
         GameMap gameMap = GameMap.getInstance();
         CollisionBox tempCB;
-        Location displacement = new Location(0, 0);
+        DPoint displacement = new DPoint(0, 0);
 
         setAvatarRefreshRate();
 

@@ -11,7 +11,7 @@ import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.avatar.monsters.Monster;
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.map.Location;
+import me.archcst.agameproject.map.DPoint;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class Target {
     private static Target target = null;
     private static Monster targetMonster;
-    Location targetPoint;
+    DPoint targetPoint;
 
     private Target() {
-        targetPoint = new Location();
+        targetPoint = new DPoint();
         if (DataCenter.getInstance().getMonsters().size() > 0) {
             refreshTarget();
         }
@@ -96,14 +96,20 @@ public class Target {
 
     // 画准星
     public void draw(Graphics g) {
-        Camera camera = Camera.getInstance();
-        double drawX = targetPoint.x() - GameSettings.FONT_SIZE / 2 - GameSettings.FONT_SIZE;
-        double drawY1 = targetPoint.y() - GameSettings.FONT_SIZE / 2;
-        double drawY2 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE;
-        double drawY3 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE * 2;
-        g.setColor(Color.RED);
-        g.drawString("┏┳┓", camera.packX(drawX), camera.packY(drawY1));
-        g.drawString("┣　┫", camera.packX(drawX), camera.packY(drawY2));
-        g.drawString("┗┻┛", camera.packX(drawX), camera.packY(drawY3));
+        if (GameSettings.SHOW_AIMING) {
+            Camera camera = Camera.getInstance();
+            double drawX = targetPoint.x() - GameSettings.FONT_SIZE / 2 - GameSettings.FONT_SIZE;
+            double drawY1 = targetPoint.y() - GameSettings.FONT_SIZE / 2;
+            double drawY2 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE;
+            double drawY3 = targetPoint.y() - GameSettings.FONT_SIZE / 2 + GameSettings.FONT_SIZE * 2;
+            g.setColor(Color.RED);
+            g.drawString("┏┳┓", camera.packX(drawX), camera.packY(drawY1));
+            g.drawString("┣　┫", camera.packX(drawX), camera.packY(drawY2));
+            g.drawString("┗┻┛", camera.packX(drawX), camera.packY(drawY3));
+        }
+    }
+
+    public DPoint getTargetPoint() {
+        return targetPoint;
     }
 }

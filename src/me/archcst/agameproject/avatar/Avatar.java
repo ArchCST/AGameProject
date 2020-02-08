@@ -6,8 +6,9 @@
 
 package me.archcst.agameproject.avatar;
 
+import me.archcst.agameproject.avatar.weapons.Weapon;
 import me.archcst.agameproject.datacenter.Framer;
-import me.archcst.agameproject.map.Location;
+import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
@@ -18,8 +19,10 @@ import java.util.HashMap;
 public abstract class Avatar {
     public final HashMap<String, Action> actions = new HashMap<>(); //角色所有动作的集合
     protected String currentAction; // 当前动作
+    protected Weapon weapon; // 角色的武器
+    protected boolean attacking; // 攻击中
 
-    protected Location location; // 角色的坐标
+    protected DPoint location; // 角色的坐标
     protected Dimension offset; // 字体Y轴修正
     protected double walkSpeed; // 移动速度
     protected int refreshRate; // 动画刷新率
@@ -93,7 +96,7 @@ public abstract class Avatar {
      * 移动角色
      *
      */
-    public void avatarMove(Location offset) {
+    public void avatarMove(DPoint offset) {
         location.moveX(offset.x());
         location.moveY(offset.y());
         // 也要移动碰撞箱
@@ -123,7 +126,7 @@ public abstract class Avatar {
         collisionBox.setCollisionBox(x1, y1, x1 + width, y1 + height);
 
         // 距离图片中心的偏移量
-        Location offset = new Location();
+        DPoint offset = new DPoint();
         offset.setX(size.width * zoom * rightPercent);
         offset.setY(size.height * zoom * downPercent);
         collisionBox.boxMove(offset);
@@ -153,11 +156,11 @@ public abstract class Avatar {
         this.refreshRate = refreshRate;
     }
 
-    public Location getLocation() {
+    public DPoint getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(DPoint location) {
         this.location = location;
     }
 
@@ -169,4 +172,26 @@ public abstract class Avatar {
         currentAction = "die";
         alive = true;
     }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public abstract void attack();
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public DPoint getCenter(){
+        return location;
+    };
 }

@@ -8,30 +8,41 @@ package me.archcst.agameproject.avatar.monsters;
 
 import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.MonsterMoveCtrl;
+import me.archcst.agameproject.avatar.weapons.Bullet;
+import me.archcst.agameproject.avatar.weapons.Weapon_Monster;
 import me.archcst.agameproject.map.GameMap;
-import me.archcst.agameproject.map.Location;
+import me.archcst.agameproject.map.DPoint;
+import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
 
 import java.awt.*;
+import java.util.Vector;
 
 public abstract class Monster extends Avatar {
 
     // 所有Monster子类的默认属性
     protected Monster(double zoom) {
 
-        location = new Location();
+        location = new DPoint();
         moveCtrl = new MonsterMoveCtrl(this);
         size = new Dimension();
         collisionBox = new CollisionBox();
         this.zoom = zoom;
         alive = true;
+        weapon = new Weapon_Monster();
     }
 
     public void initLocation() {
         location = GameMap.getInstance().randomLocation(collisionBox);
         collisionBox.boxMove(location);
     }
-//    Point mapOffset = GameMap.getInstance().getOffset();
+
+    @Override
+    public void attack() {
+        weapon.shoot();
+    }
+
+    //    Point mapOffset = GameMap.getInstance().getOffset();
 //    public void draw(Graphics g) {
 //        Action action = actions.get(currentAction);
 //

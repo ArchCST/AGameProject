@@ -217,7 +217,8 @@ public class GameMap {
             Camera camera = Camera.getInstance();
             String[] hints = new String[]{
                     "WASD: 移动,  ",
-                    "J: 攻击",
+                    "J: 攻击,  ",
+                    "X: 自杀,  ",
                     "1: 关闭提示,  ",
                     "2: 准星,  ",
                     "3: 界面中心点, 青 ",
@@ -231,7 +232,7 @@ public class GameMap {
             for (int i = 0; i < hints.length; i++) {
                 g.drawString(hints[i],
                         camera.packX((mapSize.width+1)*GameSettings.BLOCK_SIZE + 20),
-                        camera.packY(10 + i * 40));
+                        camera.packY((mapSize.height+1)*GameSettings.BLOCK_SIZE - 420 + i * 40));
             }
         }
     }

@@ -50,21 +50,27 @@ public class GameOverPanel extends JPanel {
 
         g.setColor(Color.WHITE);
         for (int i = 0; i < gameOver.length; i++) {
-            g.drawString(gameOver[i], 320, 150 + i * 14);
+            g.drawString(gameOver[i], 320, 90 + i * 14);
         }
 
         // 当前成绩
         g.setFont(new Font("Monaco", Font.BOLD, 20));
-        g.drawString(thisRecord.formatScore(), 325, 260);
+        g.drawString(thisRecord.formatScore(), 320, 230);
 
         // 历史成绩
         g.setFont(new Font("Monaco", Font.BOLD, 16));
         for (int i = 0; i < 10; i++) {
             if (i == records.size()) break;
-            g.drawString(records.get(i).formatScore(), 380, 350 + 20 * i);
+            g.drawString(records.get(i).formatScore(), 380, 320 + 20 * i);
         }
 
+        // 新游戏
 
+        g.setFont(new Font("Monaco", Font.BOLD, 20));
+        g.drawString("PRESS [SPACE] TO RESTART", 500, 620);
+
+
+        // 测试模式画中心点
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_PANEL_CENTRAL_POINT) {
             g.setColor(Color.CYAN);
 //            g.drawString("╋", getWidth() / 2 - 8, getHeight() / 2 + 8);

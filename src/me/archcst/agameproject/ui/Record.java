@@ -33,12 +33,29 @@ public class Record implements Serializable, Comparable<Record> {
         String m = "" + duration / (1000 * 60);
         String s = "" + duration / (1000) % 60;
 
-        String resultString = "Score: "+score+"            "+m+":"+s+"            " + endTimeString;
+        s = s.length() == 2 ? s : "0" + s;
+        if (m.length() < 5) {
+            int zeros = 5 - m.length();
+            for (int i = 0; i < zeros; i++) {
+                m = " "+m;
+            }
+        }
+        String scr = score + "";
+
+        if (scr.length() < 5) {
+            int zeros = 5 - scr.length();
+            for (int i = 0; i < zeros; i++) {
+                scr = " " + scr;
+            }
+        }
+
+
+        String resultString = "Score: "+scr+"        "+m+":"+s+"          " + endTimeString;
         return resultString;
     }
 
     @Override
     public int compareTo(Record o) {
-        return this.score - o.score;
+        return o.score - this.score;
     }
 }

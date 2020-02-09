@@ -40,14 +40,17 @@ public class GameMap {
 
 
     public void newMap() {
+        mapBlocks = new MapBlock[][]{};
+        walls = new ArrayList<>();
+        obstacles = new ArrayList<>();
         generateMap();
         generateWall();
 
 
         safeArea = new CollisionBox(mapSize.width * GameSettings.BLOCK_SIZE / 2 - 30,
                 mapSize.height * GameSettings.BLOCK_SIZE / 2 - 30,
-                mapSize.width*GameSettings.BLOCK_SIZE/2 + 30,
-                mapSize.height*GameSettings.BLOCK_SIZE/2 + 30);
+                mapSize.width * GameSettings.BLOCK_SIZE / 2 + 30,
+                mapSize.height * GameSettings.BLOCK_SIZE / 2 + 30);
 
         generateObstacles();
     }
@@ -82,37 +85,33 @@ public class GameMap {
 
     private void generateWall() {
         for (int i = 0; i < mapSize.width; i++) {
-            walls.add(new Wall(1,
-                    i * GameSettings.BLOCK_SIZE,
+            walls.add(new Wall(i * GameSettings.BLOCK_SIZE,
                     -GameSettings.BLOCK_SIZE));
 
-            walls.add(new Wall(1,
-                    i * GameSettings.BLOCK_SIZE,
+            walls.add(new Wall(i * GameSettings.BLOCK_SIZE,
                     mapSize.height * GameSettings.BLOCK_SIZE));
         }
 
 
         for (int i = 0; i < mapSize.height; i++) {
-            walls.add(new Wall(1,
-                    -GameSettings.BLOCK_SIZE,
+            walls.add(new Wall(-GameSettings.BLOCK_SIZE,
                     i * GameSettings.BLOCK_SIZE));
 
-            walls.add(new Wall(1,
-                    mapSize.width * GameSettings.BLOCK_SIZE,
+            walls.add(new Wall(mapSize.width * GameSettings.BLOCK_SIZE,
                     i * GameSettings.BLOCK_SIZE));
         }
 
         // 添加四个角的墙
-        walls.add(new Wall(1,
+        walls.add(new Wall(
                 -GameSettings.BLOCK_SIZE,
                 -GameSettings.BLOCK_SIZE));
-        walls.add(new Wall(1,
+        walls.add(new Wall(
                 mapSize.width * GameSettings.BLOCK_SIZE,
                 -GameSettings.BLOCK_SIZE));
-        walls.add(new Wall(1,
+        walls.add(new Wall(
                 -GameSettings.BLOCK_SIZE,
                 mapSize.height * GameSettings.BLOCK_SIZE));
-        walls.add(new Wall(1,
+        walls.add(new Wall(
                 mapSize.width * GameSettings.BLOCK_SIZE,
                 mapSize.height * GameSettings.BLOCK_SIZE));
     }
@@ -159,7 +158,7 @@ public class GameMap {
             Camera camera = Camera.getInstance();
             g.setColor(Color.WHITE);
             g.drawRect(camera.packX(cb.x1), camera.packY(cb.y1),
-                    (int)cb.width, (int)cb.height);
+                    (int) cb.width, (int) cb.height);
         }
 
         boolean b = false;
@@ -170,10 +169,10 @@ public class GameMap {
                     Camera camera = Camera.getInstance();
                     g.setColor(Color.RED);
                     g.drawRect(camera.packX(mc.x1), camera.packY(mc.y1),
-                            (int)mc.width, (int)mc.height);
+                            (int) mc.width, (int) mc.height);
 
                     g.drawRect(camera.packX(cb.x1), camera.packY(cb.y1),
-                            (int)cb.width, (int)cb.height);
+                            (int) cb.width, (int) cb.height);
                 }
                 b = true;
             }
@@ -212,6 +211,28 @@ public class GameMap {
 
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(g);
+        }
+
+        if (GameSettings.HINT) {
+            Camera camera = Camera.getInstance();
+            String[] hints = new String[]{
+                    "WASD: 移动,  ",
+                    "J: 攻击",
+                    "1: 关闭提示,  ",
+                    "2: 准星,  ",
+                    "3: 界面中心点, 青 ",
+                    "4: 角色外框, 绿 ",
+                    "5: 所有碰撞箱, 黄 ",
+                    "6: 碰撞, 红 ",
+                    "7: 预判碰撞箱, 白 ",
+                    "8: 信标, 紫 "
+            };
+            g.setColor(Color.WHITE);
+            for (int i = 0; i < hints.length; i++) {
+                g.drawString(hints[i],
+                        camera.packX((mapSize.width+1)*GameSettings.BLOCK_SIZE + 20),
+                        camera.packY(10 + i * 40));
+            }
         }
     }
 

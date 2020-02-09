@@ -30,7 +30,7 @@ public abstract class Avatar {
     protected int refreshRate; // 动画刷新率
 
     protected Dimension size; // 原始大小
-    protected double zoom; // 角色放大系数
+    protected double zoom; // 角色放大系数，改为ASCII画风后还不知道如何实现，暂时保留
 
     protected CollisionBox collisionBox; // 碰撞箱
     protected Boolean alive; // 是否存活
@@ -40,10 +40,16 @@ public abstract class Avatar {
     protected int hp; // 当前血量
     protected int maxHp; // 满血量
 
+    protected Color color; // 角色的颜色
+
     protected Avatar() {
         currentAction = "idle";
         collisionBox = new CollisionBox();
-        offset = new Dimension(); // 字体Y轴修正
+        location = new DPoint();
+        size = new Dimension();
+        offset = new Dimension(); // 字体修正
+        alive = true;
+        zoom = 1; // 角色放大系数，改为ASCII画风后弃用
     }
 
     public void draw(Graphics g) {
@@ -55,6 +61,7 @@ public abstract class Avatar {
             frame = Framer.getInstance().getFrame(refreshRate) % action.getFrames();
         } else {
             System.out.println("找不到动作: " + currentAction);
+            return;
         }
 
         String[] animateByFrame = action.getAnimateByFrame(frame);
@@ -64,32 +71,36 @@ public abstract class Avatar {
         g.fillRect(camera.packX(location.intX()), camera.packY(location.intY()),
                 size.width, size.height);
 
+        // 画动作
         for (int i = 0; i < animateByFrame.length; i++) {
-            g.setColor(action.getColor());
+            g.setColor(color);
             g.drawString(animateByFrame[i],
                     camera.packX(location.intX() + offset.width),
                     camera.packY(location.intY() + i * GameSettings.FONT_SIZE + offset.height));
         }
 
-        // 开发模式画出角色外框
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_BOX) {
-            g.setColor(Color.BLUE);
-            g.drawRect(camera.packX(location.intX()), camera.packY(location.intY()),
-                    size.width, size.height);
-        }
+        // 开发模式测试用代码
+        if (GameSettings.DEV_MODE) {
+            // 画出角色外框
+            if (GameSettings.DEV_SHOW_AVATAR_BOX) {
+                g.setColor(Color.GREEN);
+                g.drawRect(camera.packX(location.intX()), camera.packY(location.intY()),
+                        size.width, size.height);
+            }
 
-        // 开发模式画出碰撞箱
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
-            g.setColor(Color.GREEN);
-            collisionBox.draw(g);
-        }
+            // 画出碰撞箱
+            if (GameSettings.DEV_SHOW_AVATAR_COLLISION_BOX) {
+                g.setColor(Color.GREEN);
+                collisionBox.draw(g);
+            }
 
-        // 开发模式画角色中心
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_CENTRAL_POINT) {
-            g.setColor(Color.BLUE);
-            DPoint center = getCenter();
-            g.fillRect(camera.packX(center.x() - 1), camera.packY(center.y() - 1),
-                    3, 3);
+            // 画角色中心
+            if (GameSettings.DEV_SHOW_AVATAR_CENTRAL_POINT) {
+                g.setColor(Color.BLUE);
+                DPoint center = getCenter();
+                g.fillRect(camera.packX(center.x() - 1), camera.packY(center.y() - 1),
+                        3, 3);
+            }
         }
 
 

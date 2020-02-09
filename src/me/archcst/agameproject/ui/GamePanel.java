@@ -30,8 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setVisible(true);
         this.setBackground(Color.BLACK);
 
-        this.setFocusable(true);
-        this.addKeyListener(new GameKeyListener());
+//        this.setFocusable(true);
+//        this.addKeyListener(new GameKeyListener());
 
         Thread thread = new Thread(this);
         thread.start();
@@ -58,9 +58,9 @@ public class GamePanel extends JPanel implements Runnable{
         dataCenter.gameProcess(g);
 
         if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_PANEL_CENTRAL_POINT) {
-            g.setColor(Color.WHITE);
+            g.setColor(Color.CYAN);
 //            g.drawString("╋", getWidth() / 2 - 8, getHeight() / 2 + 8);
-            g.fillRect(getWidth()/2 - 3, getHeight() /2 -3 , 6, 6);
+            g.fillRect(getWidth()/2 - 2, getHeight() /2 -2 , 6, 6);
         }
 
 

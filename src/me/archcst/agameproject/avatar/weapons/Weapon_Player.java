@@ -6,6 +6,7 @@
 
 package me.archcst.agameproject.avatar.weapons;
 
+import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.util.GameSettings;
@@ -15,7 +16,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Weapon_Player extends Weapon {
-    public Weapon_Player() {
+    public Weapon_Player(Avatar avatar) {
+        super(avatar);
         weaponColor = Color.WHITE;
         loadWeapon();
     }
@@ -35,7 +37,7 @@ public class Weapon_Player extends Weapon {
 
         // 武器数值设定
         damage = 5; // 不暴击的子弹伤害
-        speed = 600; // 射速，每分钟子弹伤害
+        speed = 600; // 射速，每分钟子弹个数
         crd = 3; // 暴击伤害倍率
         cri = 0.1; // 暴击几率
     }

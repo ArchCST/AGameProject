@@ -13,12 +13,10 @@ import java.io.IOException;
 
 public class Action {
     private String[][] animate;
-    private Color color;
     private int frames;
 
-    public Action(String[][] animate, Color color) {
+    public Action(String[][] animate) {
         this.animate = animate;
-        this.color = color;
         frames = animate.length;
     }
 
@@ -32,9 +30,5 @@ public class Action {
 
     public String[] getAnimateByFrame(int frame) {
         return animate[frame];
-    }
-
-    public Color getColor() {
-        return color;
     }
 }

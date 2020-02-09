@@ -7,6 +7,8 @@
 package me.archcst.agameproject;
 
 import me.archcst.agameproject.ui.GameFrame;
+import me.archcst.agameproject.ui.GameOverPanel;
+import me.archcst.agameproject.ui.GamePanel;
 
 public class Demo {
     public static void main(String[] args) {

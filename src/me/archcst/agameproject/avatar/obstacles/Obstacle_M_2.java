@@ -33,6 +33,6 @@ public class Obstacle_M_2 extends Obstacle {
         animate[0][4] = "├───┤";
         animate[0][5] = "└───┘";
 
-        actions.put("idle", new Action(animate, Color.WHITE));
+        actions.put("idle", new Action(animate));
     }
 }

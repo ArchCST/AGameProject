@@ -14,11 +14,8 @@ import java.awt.*;
 public abstract class Obstacle extends Avatar {
 
     public Obstacle() {
-        zoom = 1;
-        this.location = new DPoint();
-        alive = true;
-        size = new Dimension();
         currentAction = "idle";
+        color = Color.WHITE;
     }
 
     @Override

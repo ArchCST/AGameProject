@@ -56,10 +56,10 @@ public class Target {
                 }
             }
 
+            targetPoint.setX(targetMonster.getLocation().x() + targetMonster.getSize().width / 2);
+            targetPoint.setY(targetMonster.getLocation().y() + targetMonster.getSize().height / 2);
         }
 
-        targetPoint.setX(targetMonster.getLocation().x() + targetMonster.getSize().width / 2);
-        targetPoint.setY(targetMonster.getLocation().y() + targetMonster.getSize().height / 2);
     }
 
     /**

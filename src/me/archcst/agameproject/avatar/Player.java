@@ -35,28 +35,39 @@ public class Player extends Avatar {
     }
 
     private Player() {
-        zoom = 1;
-        size = new Dimension(18, 44);
-        walkSpeed = 2;
-        refreshRate = GameSettings.AVATAR_REFRESH_RATE;
-        alive = true;
-        moveCtrl = new PlayerMoveCtrl(this);
-        weapon = new Weapon_Player();
-        hp = 95;
-        maxHp = 100;
+        size.width = 18; // 绘图宽度
+        size.height = 44; // 绘图高度
+        walkSpeed = 2; // 移动速度
+        refreshRate = GameSettings.AVATAR_REFRESH_RATE; // 动画刷新率
+        moveCtrl = new PlayerMoveCtrl(this); // 移动控制器
+        weapon = new Weapon_Player(this); // 武器
+        hp = 100; // 当前血量
+        maxHp = 100; // 最大血量
 
-        loadAction();
-        location = new DPoint(
-                (GameMap.getInstance().getMapSize().width / 2) * GameSettings.BLOCK_SIZE + 10,
-                (GameMap.getInstance().getMapSize().height / 2) * GameSettings.BLOCK_SIZE);
+        loadAction(); // 加载动作动画
+
+        // 初始位置
+        location.setX((GameMap.getInstance().getMapSize().width / 2) * GameSettings.BLOCK_SIZE + 10);
+        location.setY((GameMap.getInstance().getMapSize().height / 2) * GameSettings.BLOCK_SIZE);
+
+        // 字体修正
         offset.width = 0;
         offset.height = 12;
 
+        // 角色颜色
+        color = Color.WHITE;
+
         // 碰撞箱
         setCollisionBox(1, 0.5, 0, 0.2);
-//        collisionBox = new CollisionBox(location.x + 13, location.y + 36,
-//                location.x + sSize.width - 14, location.y + sSize.height);
+    }
 
+    public void newGame() {
+        alive = true;
+        hp = 100;
+        location.setX((GameMap.getInstance().getMapSize().width / 2) * GameSettings.BLOCK_SIZE + 10);
+        location.setY((GameMap.getInstance().getMapSize().height / 2) * GameSettings.BLOCK_SIZE);
+
+        setCollisionBox(1, 0.5, 0, 0.2);
     }
 
     @Override
@@ -68,7 +79,7 @@ public class Player extends Avatar {
         animate[0][1] = "/|\\";
         animate[0][2] = "/ \\";
 
-        actions.put("idle", new Action(animate, Color.WHITE));
+        actions.put("idle", new Action(animate));
 
         // 右移
         animate = new String[3][3];
@@ -85,7 +96,7 @@ public class Player extends Avatar {
         animate[2][1] = "/|\\";
         animate[2][2] = " >\\";
 
-        actions.put("walk_right", new Action(animate, Color.WHITE));
+        actions.put("walk_right", new Action(animate));
 
         // 左移
         animate = new String[3][3];
@@ -102,7 +113,7 @@ public class Player extends Avatar {
         animate[2][1] = "/|\\";
         animate[2][2] = "/<";
 
-        actions.put("walk_left", new Action(animate, Color.WHITE));
+        actions.put("walk_left", new Action(animate));
     }
 
     @Override
@@ -110,10 +121,16 @@ public class Player extends Avatar {
         weapon.shoot();
     }
 
+    private long lastDamageTime = System.currentTimeMillis(); // 上一次受伤的时间
     @Override
     public void changeHp(int amount) {
-        super.changeHp(amount);
+        if (System.currentTimeMillis() - lastDamageTime > GameSettings.PLAYER_INVINCIBLE_TIME) {
+            super.changeHp(amount);
+            lastDamageTime = System.currentTimeMillis();
+        }
+
         if (hp == 0) {
+            alive = false;
             DataCenter.getInstance().gameOver();
         }
     }

@@ -93,6 +93,7 @@ public class MonsterMoveCtrl extends MoveCtrl {
 
     // 随机射击
     private long lastShootTime = System.currentTimeMillis();
+
     public void randomShoot() {
         Random r = GameSettings.r;
         // 上次射击至少 5000ms后 才能再次射击
@@ -104,9 +105,8 @@ public class MonsterMoveCtrl extends MoveCtrl {
             Weapon weapon = avatar.getWeapon();
             if (weapon instanceof Weapon_Monster) {
                 Weapon_Monster w = (Weapon_Monster) weapon;
-                int bulletAmount = r.nextInt(2) + 3;
-//                System.out.println(bulletAmount);
-                w.setBulletAmount(bulletAmount);
+                // 设置单次射击子弹数量（根据武器设定）
+                w.setBulletAmount(w.getSingleShootAmount());
                 lastShootTime = System.currentTimeMillis();
             }
         }

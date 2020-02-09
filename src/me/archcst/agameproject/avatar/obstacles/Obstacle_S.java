@@ -35,6 +35,6 @@ public class Obstacle_S extends Obstacle {
         animate[0][2] = "├─┤";
         animate[0][3] = "└─┘";
 
-        actions.put("idle", new Action(animate, Color.WHITE));
+        actions.put("idle", new Action(animate));
     }
 }

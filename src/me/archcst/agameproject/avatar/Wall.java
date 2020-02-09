@@ -14,15 +14,17 @@ import java.awt.*;
 
 public class Wall extends Avatar {
 
-    public Wall(int zoom, int x, int y) {
+    public Wall(int x, int y) {
         this.location = new DPoint(x, y);
-        size = new Dimension(GameSettings.BLOCK_SIZE,GameSettings.BLOCK_SIZE);
+        size.width = GameSettings.BLOCK_SIZE;
+        size.height = GameSettings.BLOCK_SIZE;
+
         currentAction = "idle";
-        collisionBox = new CollisionBox();
         offset.width = 1;
         offset.height = 6;
-        this.zoom = zoom;
         alive = true;
+
+        color = Color.LIGHT_GRAY;
 
         loadAction();
 
@@ -45,7 +47,7 @@ public class Wall extends Avatar {
         animate[0][2] = "┣━┫";
         animate[0][3] = "┗━┛";
 
-        actions.put("idle", new Action(animate, Color.LIGHT_GRAY));
+        actions.put("idle", new Action(animate));
     }
 
     @Override

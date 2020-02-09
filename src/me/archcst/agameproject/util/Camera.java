@@ -22,6 +22,11 @@ public class Camera {
 //        cameraThread.start();
     }
 
+    public void newGame() {
+        beacon = Player.getInstance().getCenter();
+        cLocation = new DPoint(beacon);
+    }
+
     public static Camera getInstance() {
         if (camera == null) {
             synchronized (Camera.class) {

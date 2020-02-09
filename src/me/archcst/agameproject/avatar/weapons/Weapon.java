@@ -31,7 +31,8 @@ public abstract class Weapon {
     protected double crd; // 暴击倍率
 
 
-    public Weapon() {
+    public Weapon(Avatar avatar) {
+        this.avatar =avatar;
         offsetLeft = new DPoint();
         offsetRight = new DPoint();
         refreshRate = 16;
@@ -61,10 +62,5 @@ public abstract class Weapon {
 
     public DPoint offsetRight() {
         return offsetRight;
-    }
-
-    public void setAvatar(Avatar avatar) {
-        this.avatar = avatar;
-        avatar.setWeapon(this);
     }
 }

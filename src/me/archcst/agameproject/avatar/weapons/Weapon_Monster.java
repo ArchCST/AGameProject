@@ -6,16 +6,24 @@
 
 package me.archcst.agameproject.avatar.weapons;
 
+import me.archcst.agameproject.avatar.Avatar;
 import me.archcst.agameproject.avatar.Player;
 import me.archcst.agameproject.datacenter.DataCenter;
 
 import java.awt.*;
 
 public class Weapon_Monster extends Weapon {
-    public Weapon_Monster() {
-        speed = 120;
-        weaponColor = Color.WHITE;
-        loadWeapon();
+    private double distance; // 子弹移动速度（距离）
+    private int singleShootAmount; // 单次射击的个数
+    private int damage; // 单发子弹的伤害
+
+    // 怪物武器的属性：射速，子弹移动速度，单词射击的个数，单发子弹的伤害，射速
+    public Weapon_Monster(Avatar avatar, int speed, double distance, int singleShootAmount, int damage) {
+        super(avatar);
+        this.speed = speed;
+        this.distance = distance;
+        this.singleShootAmount = singleShootAmount;
+        this.damage = damage;
     }
 
     private void loadWeapon() {
@@ -34,8 +42,8 @@ public class Weapon_Monster extends Weapon {
 
     @Override
     protected void generateBullet() {
-        Bullet bullet = new Bullet(avatar, Player.getInstance().getCenter(), 5);
-        bullet.initBullet("◉", Color.WHITE, -4, 4, 3);
+        Bullet bullet = new Bullet(avatar, Player.getInstance().getCenter(), damage);
+        bullet.initBullet("◉", Color.WHITE, -4, 4, distance);
 
         DataCenter.getInstance().monsterBullets.add(bullet);
     }
@@ -51,8 +59,6 @@ public class Weapon_Monster extends Weapon {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastShootTime > bulletGap) {
             if (bulletAmount-- > 0) {
-
-                System.out.println("ba:" + bulletAmount);
                 generateBullet();
                 lastShootTime = System.currentTimeMillis();
             }
@@ -61,5 +67,9 @@ public class Weapon_Monster extends Weapon {
 
     public void setBulletAmount(int bulletAmount) {
         this.bulletAmount = bulletAmount;
+    }
+
+    public int getSingleShootAmount() {
+        return singleShootAmount;
     }
 }

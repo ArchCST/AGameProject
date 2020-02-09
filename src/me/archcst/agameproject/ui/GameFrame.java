@@ -12,8 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame {
+    public static JFrame jFrame = null;
+
     public void mainFrame() {
-        JFrame jFrame = new JFrame();
+        jFrame = new JFrame();
         jFrame.setSize(GameSettings.GAME_WIDTH,GameSettings.GAME_HEIGHT);
         jFrame.setTitle("A Game Project");
         jFrame.setLocationRelativeTo(null); // 全屏居中
@@ -21,6 +23,10 @@ public class GameFrame {
         jFrame.setLayout(null);
         jFrame.setVisible(true);
 
-        jFrame.add(GamePanel.getInstance());
+        jFrame.setFocusable(true);
+        jFrame.addKeyListener(new GameKeyListener());
+//        jFrame.add(GamePanel.getInstance());
+
+        jFrame.add(GameStartPanel.getInstance());
     }
 }

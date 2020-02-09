@@ -13,6 +13,7 @@ import me.archcst.agameproject.avatar.weapons.Bullet;
 import me.archcst.agameproject.avatar.weapons.Weapon;
 import me.archcst.agameproject.avatar.weapons.Weapon_Player;
 import me.archcst.agameproject.avatar.weapons.Weapon_Monster;
+import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.util.Camera;
 import me.archcst.agameproject.util.CollisionBox;
@@ -94,11 +95,23 @@ public class DataCenter {
         }
 
 
-        // 测试：画出地图所有碰撞箱
-        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
-            for (CollisionBox cb:gameMap.getAllMapCollisionBox()) {
-                cb.draw(g);
+        // 测试画出地图所有碰撞箱
+        if (GameSettings.DEV_MODE) {
+            // 画出地图所有碰撞箱
+            if (GameSettings.DEV_SHOW_MAP_COLLISION_BOX) {
+                for (CollisionBox cb:gameMap.getAllMapCollisionBox()) {
+                    cb.draw(g);
+                }
             }
+            // 画出beacon位置
+            if (GameSettings.DEV_SHOW_BEACON) {
+                Camera camera = Camera.getInstance();
+                DPoint beacon = camera.getBeacon();
+
+                g.setColor(Color.MAGENTA);
+                g.fillRect(camera.packX(beacon.x() - 2), camera.packY(beacon.y() - 2), 5, 5);
+            }
+
         }
     }
 
@@ -164,20 +177,20 @@ public class DataCenter {
                     continue;
                 }
                 // 计算是否碰撞到玩家
-                // 生成玩家受击体，以玩家中心点为中心，宽度13，高度37的方盒子
-                CollisionBox box = new CollisionBox(
-                        player.getCenter().x() - 6,
-                        player.getCenter().y() - 18,
-                        player.getCenter().x() + 6,
-                        player.getCenter().y() + 18);
-                if (b.hitBox(box)) {
+                if (b.hitBox(player.getAttackBox())) {
                     player.changeHp(-b.getDamage());
-                    if (player.getHp() == 0) {
-                        gameOver();
-                    }
                     monsterBullets.remove(b);
                 }
             }
+        }
+
+        // 玩家怪物的碰撞伤害
+        for (Monster m: monsters) {
+            if (m.getCollisionBox().equals(player.getAttackBox())) {
+                // 碰撞怪物扣血10
+                player.changeHp(-10);
+            }
+
         }
 
         // 更新玩家的目标
@@ -188,8 +201,8 @@ public class DataCenter {
         return monsters;
     }
 
-    private void gameOver() {
-        System.out.println("游戏结束");
+    public void gameOver() {
+        System.out.println("游戏失败");
     }
 
     private void win() {

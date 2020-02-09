@@ -38,12 +38,12 @@ public class Camera {
 
     public int packX(double x) {
         int panelCenterX = GamePanel.getInstance().getWidth() / 2;
-        return panelCenterX - (int) (cLocation.x() - x) - GameSettings.BLOCK_SIZE / 2;
+        return panelCenterX - (int) (cLocation.x() - x);
     }
 
     public int packY(double y) {
         int panelCenterY = GamePanel.getInstance().getHeight() / 2;
-        return panelCenterY - (int) (cLocation.y() - y) - GameSettings.BLOCK_SIZE / 2;
+        return panelCenterY - (int) (cLocation.y() - y);
     }
 
     public void setBeacon(DPoint DPoint) {
@@ -97,5 +97,9 @@ public class Camera {
                 }
             }
         }
+    }
+
+    public DPoint getBeacon() {
+        return beacon;
     }
 }

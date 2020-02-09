@@ -8,10 +8,12 @@ package me.archcst.agameproject.avatar;
 
 import me.archcst.agameproject.avatar.weapons.Bullet;
 import me.archcst.agameproject.avatar.weapons.Weapon_Player;
+import me.archcst.agameproject.datacenter.DataCenter;
 import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.util.Camera;
+import me.archcst.agameproject.util.CollisionBox;
 import me.archcst.agameproject.util.GameSettings;
 import me.archcst.agameproject.util.Target;
 
@@ -106,6 +108,23 @@ public class Player extends Avatar {
     @Override
     public void attack() {
         weapon.shoot();
+    }
+
+    @Override
+    public void changeHp(int amount) {
+        super.changeHp(amount);
+        if (hp == 0) {
+            DataCenter.getInstance().gameOver();
+        }
+    }
+
+    // 生成玩家受击体，以玩家中心点为中心，宽度13，高度37的方盒子
+    public CollisionBox getAttackBox() {
+        return new CollisionBox(
+                player.getCenter().x() - 6,
+                player.getCenter().y() - 18,
+                player.getCenter().x() + 6,
+                player.getCenter().y() + 18);
     }
 
     @Override

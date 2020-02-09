@@ -18,7 +18,9 @@ public class GameSettings {
     public static final boolean DEV_SHOW_MAP_COLLISION_BOX = false; // 画出地图的碰撞箱
     public static final boolean DEV_SHOW_CONFLICT_COLLISION_BOX = false; // 画出发生碰撞的碰撞箱
     public static final boolean DEV_SHOW_TEMP_COLLISION_BOX = false; // 画出发生位移前用来预判的碰撞箱
-    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = false; // 画出Panel的中心点
+    public static final boolean DEV_SHOW_PANEL_CENTRAL_POINT = true; // 画出Panel的中心点
+    public static final boolean DEV_SHOW_AVATAR_CENTRAL_POINT = true; // 画出Panel的中心点
+    public static final boolean DEV_SHOW_BEACON = true; // 画出Panel的中心点
 
     // 游戏基本设置
     public static final boolean SHOW_AIMING = false; // 显示准星
@@ -43,7 +45,7 @@ public class GameSettings {
 
     // 摄像机
     public static final int BEACON_DISPLACEMENT = 80; // 信标的位移距离
-    public static final double CAMERA_SPEED = 2.5; // 摄像机的速度
+    public static final double CAMERA_SPEED = 1.5; // 摄像机的速度
 
     // ASCII 画风设置
     public static final int FONT_SIZE = 13; // 字体大小

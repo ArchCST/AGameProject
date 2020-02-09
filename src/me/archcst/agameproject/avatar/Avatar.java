@@ -84,6 +84,15 @@ public abstract class Avatar {
             collisionBox.draw(g);
         }
 
+        // 开发模式画角色中心
+        if (GameSettings.DEV_MODE && GameSettings.DEV_SHOW_AVATAR_CENTRAL_POINT) {
+            g.setColor(Color.BLUE);
+            DPoint center = getCenter();
+            g.fillRect(camera.packX(center.x() - 1), camera.packY(center.y() - 1),
+                    3, 3);
+        }
+
+
     }
 
     /**
@@ -202,8 +211,8 @@ public abstract class Avatar {
 
 
     public DPoint getCenter(){
-        return new DPoint(location.x() + (double) size.width / 2,
-                location.y() + (double) size.height / 2);
+        return new DPoint(location.x() + (double) size.width / 2 - 1,
+                location.y() + (double) size.height / 2 - 1);
     };
 
     public int getRefreshRate() {

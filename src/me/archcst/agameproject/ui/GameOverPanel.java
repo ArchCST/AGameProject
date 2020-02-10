@@ -6,9 +6,6 @@
 
 package me.archcst.agameproject.ui;
 
-import com.sun.javafx.binding.StringFormatter;
-import me.archcst.agameproject.datacenter.DataCenter;
-import me.archcst.agameproject.datacenter.Framer;
 import me.archcst.agameproject.util.GameSettings;
 
 import javax.swing.*;
@@ -61,6 +58,9 @@ public class GameOverPanel extends JPanel {
         g.setFont(new Font("Monaco", Font.BOLD, 16));
         for (int i = 0; i < 10; i++) {
             if (i == records.size()) break;
+            if (records.get(i) == thisRecord) {
+                g.drawString("▶", 360, 318 + 20 * i);
+            }
             g.drawString(records.get(i).formatScore(), 380, 320 + 20 * i);
         }
 

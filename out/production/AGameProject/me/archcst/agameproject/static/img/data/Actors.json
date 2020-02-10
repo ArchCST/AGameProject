@@ -1,7 +1,0 @@
-[
-null,
-{"id":1,"battlerName":"PHILIP","characterIndex":0,"characterName":"ALL","classId":1,"equips":[0,0,2,3,4],"faceIndex":0,"faceName":"PHILIP","traits":[],"initialLevel":1,"maxLevel":99,"name":"PHILIP","nickname":"","note":"","profile":"Villager from Riverstone."},
-{"id":2,"battlerName":"DWAYNE","characterIndex":1,"characterName":"ALL","classId":3,"equips":[3,18,2,3,4],"faceIndex":0,"faceName":"DWAYNE","traits":[],"initialLevel":9,"maxLevel":99,"name":"DWAYNE","nickname":"","note":"","profile":"A Mage from Selpha"},
-{"id":3,"battlerName":"ZARIE","characterIndex":2,"characterName":"ALL","classId":4,"equips":[12,18,30,31,4],"faceIndex":6,"faceName":"ZARIE","traits":[],"initialLevel":15,"maxLevel":99,"name":"ZARIE","nickname":"","note":"","profile":"Unknown data"},
-{"id":4,"battlerName":"FLOYD","characterIndex":4,"characterName":"ALL","classId":2,"equips":[24,61,57,52,4],"faceIndex":0,"faceName":"FLOYD","traits":[],"initialLevel":20,"maxLevel":99,"name":"FLOYD","nickname":"","note":"","profile":"A Ranger from Thaga."}
-]

@@ -226,13 +226,14 @@ public class GameMap {
                     "5: 所有碰撞箱, 黄 ",
                     "6: 碰撞, 红 ",
                     "7: 预判碰撞箱, 白 ",
-                    "8: 信标, 紫 "
+                    "8: 信标, 紫 ",
+                    "9: 怪物停止攻击 "
             };
             g.setColor(Color.WHITE);
             for (int i = 0; i < hints.length; i++) {
                 g.drawString(hints[i],
                         camera.packX((mapSize.width+1)*GameSettings.BLOCK_SIZE + 20),
-                        camera.packY((mapSize.height+1)*GameSettings.BLOCK_SIZE - 420 + i * 40));
+                        camera.packY((mapSize.height+1)*GameSettings.BLOCK_SIZE - 460 + i * 40));
             }
         }
     }

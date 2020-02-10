@@ -26,6 +26,7 @@ public class GameSettings {
     // 游戏基本设置
     public static boolean HINT = true; // 显示按键提示 1
     public static boolean SHOW_AIMING = false; // 显示准星 2
+    public static boolean MONSTER_MOVE = true; // 显示准星 2
     public static final long PLAYER_INVINCIBLE_TIME = 500; // 扣血前的无敌时间
     public static final int GAME_WIDTH = 1280; // 游戏界面的宽度
     public static final int GAME_HEIGHT = 720; // 游戏界面的高度

@@ -118,6 +118,11 @@ public class GameKeyListener implements KeyListener {
                     GameSettings.DEV_SHOW_BEACON = !GameSettings.DEV_SHOW_BEACON;
                 }
                 break;
+            case KeyEvent.VK_9:
+                if (GameSettings.DEV_MODE) {
+                    GameSettings.MONSTER_MOVE = !GameSettings.MONSTER_MOVE;
+                }
+                break;
         }
     }
 }

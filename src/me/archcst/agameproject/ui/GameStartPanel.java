@@ -37,7 +37,7 @@ public class GameStartPanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        while (frame < 50) {
+        while (frame < 80) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {

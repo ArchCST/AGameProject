@@ -6,13 +6,12 @@
 
 package me.archcst.agameproject.datacenter;
 
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 import me.archcst.agameproject.avatar.*;
 import me.archcst.agameproject.avatar.monsters.Monster;
 import me.archcst.agameproject.avatar.monsters.MonsterFactory;
 import me.archcst.agameproject.avatar.weapons.Bullet;
-import me.archcst.agameproject.avatar.weapons.Weapon;
-import me.archcst.agameproject.avatar.weapons.Weapon_Player;
-import me.archcst.agameproject.avatar.weapons.Weapon_Monster;
 import me.archcst.agameproject.map.DPoint;
 import me.archcst.agameproject.map.GameMap;
 import me.archcst.agameproject.ui.GameFrame;
@@ -24,6 +23,7 @@ import me.archcst.agameproject.util.GameSettings;
 import me.archcst.agameproject.util.Target;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
@@ -150,8 +150,10 @@ public class DataCenter {
 
         // 怪物移动和射击控制
         for (Monster m : monsters) {
+            if (GameSettings.MONSTER_MOVE) {
             m.moveCtrl.move(g);
             m.attack();
+            }
         }
 
 
@@ -233,6 +235,10 @@ public class DataCenter {
         GameFrame.jFrame.remove(GamePanel.getInstance());
         GameFrame.jFrame.add(GameOverPanel.getInstance());
         GameFrame.jFrame.repaint();
+        // 音效
+//        Media hit = new Media(new File("src/me/archcst/agameproject/static/audio/gameover.mp3").toURI().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//        mediaPlayer.play();
     }
 
     private void newRandomMonster(int level) {

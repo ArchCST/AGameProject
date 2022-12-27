@@ -28,6 +28,7 @@ public class GameSettings {
     public static boolean SHOW_AIMING = false; // 显示准星 2
     public static boolean MONSTER_MOVE = true; // 显示准星 2
     public static final long PLAYER_INVINCIBLE_TIME = 500; // 扣血前的无敌时间
+    public static final double PLAYER_WALK_SPEED = System.getProperty("os.name").equals("Mac OS X") ? 2 : 2; // 扣血前的无敌时间
     public static final int GAME_WIDTH = 1280; // 游戏界面的宽度
     public static final int GAME_HEIGHT = 720; // 游戏界面的高度
     public static final long GAME_SLEEP_TIME = 8; // 游戏帧数控制
@@ -50,7 +51,7 @@ public class GameSettings {
 
     // 摄像机
     public static final int BEACON_DISPLACEMENT = 80; // 信标的位移距离
-    public static final double CAMERA_SPEED = 1.5; // 摄像机的速度
+    public static final double CAMERA_SPEED = System.getProperty("os.name").equals("Mac OS X") ? 1.5 : 1.5; // 摄像机的速度
 
     // ASCII 画风设置
     public static final int FONT_SIZE = 13; // 字体大小

@@ -37,7 +37,7 @@ public class Player extends Avatar {
     private Player() {
         size.width = 18; // 绘图宽度
         size.height = 44; // 绘图高度
-        walkSpeed = 2; // 移动速度
+        walkSpeed = GameSettings.PLAYER_WALK_SPEED; // 移动速度
         refreshRate = GameSettings.AVATAR_REFRESH_RATE; // 动画刷新率
         moveCtrl = new PlayerMoveCtrl(this); // 移动控制器
         weapon = new Weapon_Player(this); // 武器

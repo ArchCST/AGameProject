@@ -10,8 +10,6 @@ import me.archcst.agameproject.util.GameSettings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;

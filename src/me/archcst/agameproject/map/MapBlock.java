@@ -51,6 +51,7 @@ public class MapBlock {
         g.setColor(GameSettings.MAP_COLOR);
         // 随机画任意一个地图块图形
         for (int i = 0; i < images[0].length; i++) {
+//            System.out.println(g.getFont());
             g.drawString(images[type][i],
                     camera.packX(mPoint.x),
                     // 字符修正
